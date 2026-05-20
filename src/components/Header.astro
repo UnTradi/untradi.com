@@ -1,0 +1,155 @@
+---
+import { SITE_TITLE } from '../consts';
+import SocialLinks from './SocialLinks.astro';
+---
+
+<header>
+	<div class="header-band">
+		<div class="header-band-inner">
+			<span class="header-tagline">Tradición · Liturgia · Fe</span>
+			<a href="/rss.xml" class="header-rss">RSS</a>
+		</div>
+	</div>
+	<div class="header-main">
+		<div class="header-main-inner">
+			<div aria-hidden="true"></div>
+			<a href="/" class="masthead" aria-label="Inicio">
+				<span class="masthead-title">{SITE_TITLE}</span>
+			</a>
+			<div class="header-social">
+				<SocialLinks size={17} />
+			</div>
+		</div>
+	</div>
+</header>
+
+<style>
+	header {
+		position: sticky;
+		top: 0;
+		z-index: 100;
+		border-top: 3px solid var(--red);
+		border-bottom: 1px solid var(--border);
+	}
+
+	/* ── Banda superior ─────────────────────── */
+
+	.header-band {
+		background: var(--bg-elevated);
+		border-bottom: 1px solid var(--border-light);
+	}
+
+	.header-band-inner {
+		max-width: var(--max-wide);
+		margin: 0 auto;
+		padding: 0 2rem;
+		height: 28px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.header-tagline {
+		font-family: var(--font-ui);
+		font-size: 0.58rem;
+		font-weight: 700;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: var(--text-faint);
+	}
+
+	.header-rss {
+		font-family: var(--font-ui);
+		font-size: 0.58rem;
+		font-weight: 700;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--text-faint);
+		text-decoration: none;
+		transition: color 0.15s;
+	}
+
+	.header-rss:hover {
+		color: var(--red);
+		text-decoration: none;
+	}
+
+	/* ── Masthead principal ─────────────────── */
+
+	.header-main {
+		background: var(--bg-surface);
+	}
+
+	.header-main-inner {
+		max-width: var(--max-wide);
+		margin: 0 auto;
+		padding: 0 2rem;
+		height: 80px;
+		display: grid;
+		grid-template-columns: 1fr auto 1fr;
+		align-items: center;
+	}
+
+	.masthead {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 8px;
+		text-decoration: none;
+		justify-self: center;
+	}
+
+	.masthead::before,
+	.masthead::after {
+		content: '';
+		display: block;
+		width: 28px;
+		height: 1px;
+		background: var(--red);
+		opacity: 0.55;
+	}
+
+	.masthead-title {
+		font-family: var(--font-display);
+		font-size: 1.55rem;
+		font-weight: 700;
+		color: var(--text);
+		letter-spacing: -0.015em;
+		white-space: nowrap;
+		line-height: 1;
+		transition: color 0.15s;
+	}
+
+	.masthead:hover .masthead-title {
+		color: var(--red);
+	}
+
+	.header-social {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+	}
+
+	/* ── Mobile ─────────────────────────────── */
+
+	@media (max-width: 640px) {
+		.header-band { display: none; }
+
+		.header-main-inner {
+			grid-template-columns: 1fr;
+			padding: 0 1.25rem;
+		}
+
+		.masthead {
+			flex-direction: row;
+			gap: 0;
+		}
+
+		.masthead::before,
+		.masthead::after { display: none; }
+
+		.masthead-title { font-size: 1.1rem; }
+
+		.header-social { display: none; }
+	}
+</style>

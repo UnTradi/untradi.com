@@ -1,0 +1,152 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+
+const faqs = [
+	{
+		q: '¿Qué es el tradicionalismo católico?',
+		a: 'El tradicionalismo católico es una corriente dentro de la Iglesia Católica que busca preservar y restaurar las formas litúrgicas y devocionales anteriores a las reformas del Concilio Vaticano II (1962–1965). Los católicos tradicionales tienen una devoción especial por la Misa Tridentina —también llamada la "Misa de siempre"— y las prácticas piadosas que han formado la espiritualidad de la Iglesia durante siglos.',
+	},
+	{
+		q: '¿Qué significa "Novus Ordo"?',
+		a: 'Novus Ordo Missae ("Nuevo Orden de la Misa") es el nombre popular del rito litúrgico promulgado por el Papa Pablo VI en 1969 como resultado de la reforma litúrgica del Vaticano II. Es la forma ordinaria de la Misa en la Iglesia Latina y la que se celebra en la inmensa mayoría de las parroquias del mundo.',
+	},
+	{
+		q: '¿Qué es la Fraternidad Sacerdotal de San Pío X (FSSPX)?',
+		a: 'La FSSPX es una sociedad sacerdotal fundada en 1970 por el Arzobispo Marcel Lefebvre, que rechazó las reformas del Vaticano II. Tras la consagración de cuatro obispos sin mandato pontificio en 1988, la Santa Sede declaró el estado de cisma. Sin embargo, la situación canónica de la FSSPX ha evolucionado con el tiempo, y actualmente mantiene una relación compleja pero no completamente rota con Roma.',
+	},
+	{
+		q: '¿Se puede asistir a la Misa de la FSSPX?',
+		a: 'Esta es una cuestión debatida. La posición oficial de la Santa Sede ha variado. El Papa Francisco, mediante el Motu Proprio Traditionis Custodes (2021), restrictió la Misa Tridentina en parroquias ordinarias, pero la situación de la FSSPX sigue siendo sui generis. Para satisfacer el precepto dominical, la mayoría de los teólogos consideran que asistir a una Misa de la FSSPX es lícito en ausencia de otra alternativa, aunque no recomendable como práctica habitual.',
+	},
+	{
+		q: '¿Qué es "tradificar" una Misa Novus Ordo?',
+		a: 'Es el acto de incorporar elementos de la espiritualidad y devoción tradicional al contexto de la Misa ordinaria. Esto puede incluir cosas como: recibir la Comunión de rodillas y en la lengua, usar mantilla las mujeres, participar en silencio reverente, acudir a parroquias que celebran el Novus Ordo con mayor solemnidad, o rezar el Rosario antes de la Misa.',
+	},
+	{
+		q: '¿Es herético o cismático ser "tradi"?',
+		a: 'No necesariamente. La mayoría de los católicos de sensibilidad tradicional permanecen en plena comunión con Roma, aceptan el Magisterio de la Iglesia y el Concilio Vaticano II —aunque puedan tener una lectura hermenéutica distinta—, y buscan simplemente nutrir su vida espiritual con las formas litúrgicas que consideran más adecuadas. El apelativo "tradi" es amplio y abarca desde quienes simplemente prefieren el latín hasta posiciones más radicales.',
+	},
+];
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<BaseHead
+			title={`Preguntas Frecuentes — ${SITE_TITLE}`}
+			description="Respuestas a las preguntas más comunes sobre el tradicionalismo católico, la Misa Tridentina y la FSSPX."
+		/>
+		<style>
+			.page-header {
+				background: var(--bg-surface);
+				border-bottom: 1px solid var(--border);
+				padding: 3rem 2rem 2.5rem;
+				text-align: center;
+			}
+
+			.page-title {
+				font-family: var(--font-display);
+				font-size: clamp(1.8rem, 5vw, 2.8rem);
+				font-weight: 700;
+				color: var(--text);
+				margin: 0 0 0.5rem;
+			}
+
+			.page-subtitle {
+				font-family: var(--font-body);
+				font-size: 1rem;
+				font-style: italic;
+				color: var(--text-muted);
+				margin: 0;
+			}
+
+			main {
+				max-width: 800px;
+				margin: 0 auto;
+				padding: 3rem 2rem 5rem;
+			}
+
+			.faq-list {
+				display: flex;
+				flex-direction: column;
+			}
+
+			.faq-item {
+				border-bottom: 1px solid var(--border);
+				padding: 2rem 0;
+			}
+
+			.faq-item:first-child {
+				border-top: 1px solid var(--border);
+			}
+
+			.faq-question {
+				font-family: var(--font-display);
+				font-size: 1.3rem;
+				font-weight: 700;
+				color: var(--text);
+				margin: 0 0 0.75rem;
+				line-height: 1.3;
+			}
+
+			.faq-answer {
+				font-family: var(--font-body);
+				color: var(--text-muted);
+				margin: 0;
+				line-height: 1.8;
+			}
+
+			.faq-marker {
+				display: inline-block;
+				width: 22px;
+				height: 22px;
+				background: var(--red);
+				color: var(--text);
+				border-radius: 2px;
+				font-family: var(--font-ui);
+				font-size: 0.65rem;
+				font-weight: 700;
+				text-align: center;
+				line-height: 22px;
+				margin-right: 0.75rem;
+				flex-shrink: 0;
+				vertical-align: middle;
+			}
+
+			@media (max-width: 640px) {
+				main { padding: 2rem 1.25rem 3rem; }
+				.page-header { padding: 2rem 1.25rem; }
+			}
+		</style>
+	</head>
+
+	<body>
+		<Header />
+
+		<div class="page-header">
+			<h1 class="page-title">Preguntas Frecuentes</h1>
+			<p class="page-subtitle">Sobre el tradicionalismo, la liturgia y la vida en la Iglesia</p>
+		</div>
+
+		<main>
+			<div class="faq-list">
+				{
+					faqs.map((faq, i) => (
+						<div class="faq-item">
+							<h2 class="faq-question">
+								<span class="faq-marker" aria-hidden="true">{i + 1}</span>
+								{faq.q}
+							</h2>
+							<p class="faq-answer">{faq.a}</p>
+						</div>
+					))
+				}
+			</div>
+		</main>
+
+		<Footer />
+	</body>
+</html>

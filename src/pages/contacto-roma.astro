@@ -1,0 +1,854 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+
+interface Org {
+	nombre: string;
+	cat: string;
+	sede?: string;
+	postal?: string;
+	telefonos?: { n: string; l?: string }[];
+	fax?: { n: string; l?: string }[];
+	emails?: { e: string; l?: string }[];
+	webs?: string[];
+}
+
+const organismos: Org[] = [
+	{
+		nombre: 'Secretaría de Estado',
+		cat: 'secretaria',
+		sede: 'Palazzo Apostolico Vaticano, 00120 Città del Vaticano',
+		telefonos: [{ n: '+39 0669883438', l: '1ª Sección' }, { n: '+39 0669883014', l: '2ª Sección' }],
+		fax: [{ n: '+39 0669885088', l: '1ª Sección' }, { n: '+39 0669885364', l: '2ª Sección' }],
+		emails: [{ e: 'sostituto@sds.va', l: '1ª Sección' }, { e: 'rapportistati@sds.va', l: '2ª Sección' }],
+		webs: ['https://www.vatican.va/roman_curia/secretariat_state/index_sp.htm'],
+	},
+	{
+		nombre: 'Congregación para la Doctrina de la Fe',
+		cat: 'congregaciones',
+		sede: '00120 Città del Vaticano',
+		telefonos: [{ n: '+39 0669895911' }],
+		fax: [{ n: '+39 0669883409' }],
+		emails: [{ e: 'cdf@cfaith.va' }],
+		webs: ['https://www.vatican.va/roman_curia/congregations/cfaith/index_sp.htm'],
+	},
+	{
+		nombre: 'Congregación para las Iglesias Orientales',
+		cat: 'congregaciones',
+		sede: 'Palazzo del Bramante, Via della Conciliazione 34, 00193 Roma',
+		telefonos: [{ n: '+39 0669884281' }],
+		emails: [{ e: 'cco@orientchurch.va' }],
+		webs: ['https://www.vatican.va/roman_curia/congregations/orientchurch/index_sp.htm'],
+	},
+	{
+		nombre: 'Congregación para el Culto Divino y la Disciplina de los Sacramentos',
+		cat: 'congregaciones',
+		sede: 'Palazzo delle Congregazioni, Piazza Pio XII 10, 00193 Roma',
+		postal: '00120 Città del Vaticano',
+		telefonos: [{ n: '+39 0669884005' }],
+		fax: [{ n: '+39 0669883409' }],
+		emails: [{ e: 'cultdiv@ccdds.va' }],
+		webs: ['https://www.cultodivino.va', 'https://www.vatican.va/roman_curia/congregations/ccdds/index_sp.htm'],
+	},
+	{
+		nombre: 'Congregación para las Causas de los Santos',
+		cat: 'congregaciones',
+		sede: 'Piazza Pio XII 10, 00193 Roma',
+		postal: '00120 Città del Vaticano',
+		telefonos: [{ n: '+39 0669884244' }],
+		fax: [{ n: '+39 0669881935' }],
+		webs: ['https://www.causesanti.va', 'https://www.vatican.va/roman_curia/congregations/csaints/index_sp.htm'],
+	},
+	{
+		nombre: 'Congregación para los Obispos',
+		cat: 'congregaciones',
+		sede: 'Piazza Pio XII 10, 00193 Roma',
+		postal: '00120 Città del Vaticano',
+		telefonos: [{ n: '+39 06884217' }],
+		fax: [{ n: '+39 0669885303' }],
+		webs: ['https://www.vatican.va/roman_curia/congregations/cbishops/index_sp.htm'],
+	},
+	{
+		nombre: 'Comisión Pontificia para América Latina',
+		cat: 'congregaciones',
+		sede: 'Palazzo di San Paolo, Via della Conciliazione 1, 00193 Roma',
+		postal: '00120 Città del Vaticano',
+		telefonos: [{ n: '+39 0669883131' }],
+		fax: [{ n: '+39 0669884260' }],
+		emails: [{ e: 'pcal@latinamer.va' }],
+		webs: ['https://www.vatican.va/roman_curia/congregations/cbishops/pcal/index_sp.htm'],
+	},
+	{
+		nombre: 'Congregación para la Evangelización de los Pueblos',
+		cat: 'congregaciones',
+		sede: 'Piazza di Spagna 48, 00187 Roma',
+		telefonos: [{ n: '+39 0669879299' }],
+		fax: [{ n: '+39 0669880118' }],
+		emails: [{ e: 'segreteria@propagandafide.va' }],
+		webs: ['https://www.vatican.va/roman_curia/congregations/cevang/index_sp.htm'],
+	},
+	{
+		nombre: 'Congregación para el Clero',
+		cat: 'congregaciones',
+		sede: 'Palazzo delle Congregazioni, Piazza Pio XII 3, 00193 Roma',
+		telefonos: [{ n: '+39 0669884151' }],
+		fax: [{ n: '+39 0669884845' }],
+		emails: [{ e: 'clero@cclergy.va' }],
+		webs: ['https://www.clerus.va', 'https://www.vatican.va/roman_curia/congregations/cclergy/index_sp.htm'],
+	},
+	{
+		nombre: 'Congregación para los Institutos de Vida Consagrada y las Sociedades de Vida Apostólica',
+		cat: 'congregaciones',
+		sede: 'Palazzo delle Congregazioni, Piazza Pio XII 3, 00193 Roma',
+		telefonos: [{ n: '+39 0669892511' }],
+		fax: [{ n: '+39 0669884526' }],
+		webs: ['https://www.congregazionevitaconsacrata.va', 'https://www.vatican.va/roman_curia/congregations/ccscrlife/index_sp.htm'],
+	},
+	{
+		nombre: 'Congregación para la Educación Católica',
+		cat: 'congregaciones',
+		sede: 'Palazzo delle Congregazioni, Piazza Pio XII 3, 00193 Roma',
+		telefonos: [{ n: '+39 06 69 88 41 67' }],
+		fax: [{ n: '+39 06 69 88 41 72' }],
+		webs: ['https://www.educatio.va', 'https://www.vatican.va/roman_curia/congregations/ccatheduc/index_sp.htm'],
+	},
+	{
+		nombre: 'Dicasterio para los Laicos, la Familia y la Vida',
+		cat: 'dicasterios',
+		sede: 'Palazzo San Calisto, Piazza San Calisto 16, 00153 Roma',
+		postal: '00120 Città del Vaticano',
+		telefonos: [{ n: '+39 0669869300' }, { n: '+39 0669887243' }],
+		fax: [{ n: '+39 0669887214' }, { n: '+39 0669887272' }],
+		emails: [{ e: 'info@laityfamilylife.va' }],
+		webs: ['https://www.laityfamilylife.va/content/laityfamilylife/es.html'],
+	},
+	{
+		nombre: 'Dicasterio para el Servicio del Desarrollo Humano Integral',
+		cat: 'dicasterios',
+		sede: 'Palazzo San Calisto, Piazza San Calisto 16, 00153 Roma',
+		postal: '00120 Città del Vaticano',
+		telefonos: [{ n: '+39 0669879911' }],
+		fax: [{ n: '+39 0669887205' }],
+		emails: [{ e: 'info@humandevelopment.va' }],
+		webs: ['https://www.iustitiaetpax.va'],
+	},
+	{
+		nombre: 'Dicasterio para la Comunicación',
+		cat: 'dicasterios',
+		sede: 'Via della Conciliazione 5, 00120 Città del Vaticano',
+		telefonos: [{ n: '+39 0669891800' }],
+		emails: [
+			{ e: 'direzione.affarigenerali@spc.va' },
+			{ e: 'direzione.editoriale@spc.va' },
+			{ e: 'info@salastampa.va' },
+		],
+		webs: ['https://www.comunicazione.va'],
+	},
+	{
+		nombre: 'Penitenciaría Apostólica',
+		cat: 'tribunales',
+		sede: 'Palazzo della Cancelleria, Piazza della Cancelleria 1, 00186 Roma',
+		telefonos: [{ n: '+39 0669887526' }],
+		fax: [{ n: '+39 0669887557' }],
+		emails: [{ e: 'reggente@penitenziaria.va' }],
+		webs: ['https://www.penitenzieria.va'],
+	},
+	{
+		nombre: 'Tribunal de la Signatura Apostólica',
+		cat: 'tribunales',
+		sede: 'Palazzo della Cancelleria, Piazza della Cancelleria 1, 00186 Roma',
+		telefonos: [{ n: '+39 0669887520' }],
+		fax: [{ n: '+39 0669887553' }],
+		webs: ['https://www.vatican.va/roman_curia/tribunals/apost_signat/index_sp.htm'],
+	},
+	{
+		nombre: 'Tribunal de la Rota Romana',
+		cat: 'tribunales',
+		sede: 'Palazzo della Cancelleria, Piazza della Cancelleria 1, 00186 Roma',
+		telefonos: [{ n: '+39 0669887502' }],
+		fax: [{ n: '+39 0669887554' }],
+		webs: ['https://www.rotaromana.va'],
+	},
+	{
+		nombre: 'Consejo Pontificio para la Promoción de la Unidad de los Cristianos',
+		cat: 'consejos',
+		sede: 'Via della Conciliazione 5, 00193 Roma',
+		telefonos: [{ n: '+39 0669883074' }],
+		fax: [{ n: '+39 0669885365' }],
+		emails: [{ e: 'office@christianunity.va' }],
+		webs: ['https://www.vatican.va/roman_curia/pontifical_councils/chrstuni/index_sp.htm'],
+	},
+	{
+		nombre: 'Consejo Pontificio para los Textos Legislativos',
+		cat: 'consejos',
+		sede: 'Palazzo delle Congregazioni, Piazza Pio XII 10, 00193 Roma',
+		telefonos: [{ n: '+39 0669884008' }],
+		fax: [{ n: '+39 0669884710' }],
+		webs: ['https://www.delegumtextibus.va'],
+	},
+	{
+		nombre: 'Consejo Pontificio para el Diálogo Interreligioso',
+		cat: 'consejos',
+		sede: 'Via della Conciliazione 5, 00193 Roma',
+		telefonos: [{ n: '+39 0669884321' }],
+		fax: [{ n: '+39 0669884494' }],
+		emails: [{ e: 'dialogo@interrel.va' }],
+		webs: ['https://www.pcinterreligious.org'],
+	},
+	{
+		nombre: 'Consejo Pontificio de la Cultura',
+		cat: 'consejos',
+		sede: 'Via della Conciliazione 5, 00193 Roma',
+		postal: '00120 Città del Vaticano',
+		telefonos: [{ n: '+39 0669893811' }],
+		fax: [{ n: '+39 0669887368' }],
+		emails: [{ e: 'cultura@cultura.va' }],
+		webs: ['https://www.cultura.va/content/cultura/es.html'],
+	},
+	{
+		nombre: 'Consejo Pontificio para la Nueva Evangelización',
+		cat: 'consejos',
+		sede: 'Via della Conciliazione 5, 00193 Roma',
+		telefonos: [{ n: '+39 0669869500' }],
+		fax: [{ n: '+39 0669869521' }],
+		webs: ['https://www.novaevangelizatio.va'],
+	},
+	{
+		nombre: 'Consejo para la Economía',
+		cat: 'economia',
+		sede: 'Palazzo Apostolico, 00120 Città del Vaticano',
+		telefonos: [{ n: '+39 0669881771' }],
+		emails: [{ e: 'segreteria@cpe.va' }],
+		webs: ['https://www.vatican.va/roman_curia/uffici/consiglio-economia/index_sp.htm'],
+	},
+	{
+		nombre: 'Secretaría para la Economía',
+		cat: 'economia',
+		sede: 'Palazzo Apostolico, 00120 Città del Vaticano',
+		telefonos: [{ n: '+39 0669881098', l: 'Vigilancia' }, { n: '+39 0669893403', l: 'Administrativa' }],
+		fax: [{ n: '+39 0669883592', l: 'Vigilancia' }, { n: '+39 0669883141', l: 'Administrativa' }],
+		emails: [{ e: 'segretariogenerale@spe.va' }, { e: 'info@spe.va' }],
+		webs: ['https://www.vatican.va/roman_curia/uffici/segreteria-economia/index_sp.htm'],
+	},
+	{
+		nombre: 'Administración del Patrimonio de la Sede Apostólica (APSA)',
+		cat: 'economia',
+		sede: 'Palazzo Apostolico, 00120 Città del Vaticano',
+		telefonos: [{ n: '+39 0669883247' }],
+		fax: [{ n: '+39 0669883591' }],
+		emails: [{ e: 'info@apsa.va' }],
+		webs: ['https://www.vatican.va/roman_curia/uffici/apsa/index_sp.htm'],
+	},
+	{
+		nombre: 'Oficina del Auditor General',
+		cat: 'oficinas',
+		sede: 'Largo del Colonnato 3, 00193 Roma',
+		telefonos: [{ n: '+39 0669847500' }],
+		emails: [{ e: 'revisoregenerale@urg.va' }],
+		webs: ['https://www.vatican.va/roman_curia/uffici/ufficio-revisore-generale/index_sp.htm'],
+	},
+	{
+		nombre: 'Oficina de Prensa de la Santa Sede',
+		cat: 'oficinas',
+		sede: 'Via della Conciliazione 54, 00193 Roma',
+		postal: '00120 Città del Vaticano',
+		telefonos: [{ n: '+39 06698921' }],
+		fax: [{ n: '+39 0669885178' }],
+		webs: ['https://www.vatican.va/news_services/press/index_sp.htm'],
+	},
+	{
+		nombre: 'Prefectura de la Casa Pontificia',
+		cat: 'oficinas',
+		postal: '00120 Città del Vaticano',
+		telefonos: [{ n: '+39 0669883114' }],
+		fax: [{ n: '+39 0669885863' }],
+		webs: ['https://www.vatican.va/various/prefettura/index_sp.html'],
+	},
+	{
+		nombre: 'Oficina de las Celebraciones Litúrgicas del Sumo Pontífice',
+		cat: 'oficinas',
+		sede: 'Palazzo Apostolico Vaticano, 00120 Città del Vaticano',
+		telefonos: [{ n: '+39 0669883253' }, { n: '+39 0669885264' }],
+		fax: [{ n: '+39 0669885412' }],
+		emails: [{ e: 'ucepo@celebra.va' }, { e: 'biglietti@celebra.va', l: 'Eclesiásticos' }],
+		webs: ['https://w2.vatican.va/content/liturgy/es.html'],
+	},
+	{
+		nombre: 'Comité Pontificio para los Congresos Eucarísticos',
+		cat: 'oficinas',
+		sede: 'Piazza San Calisto 16, Roma',
+		postal: 'Palazzo San Calisto, 00120 Città del Vaticano',
+		telefonos: [{ n: '+39 0669887366' }],
+		fax: [{ n: '+39 0669887154' }],
+		emails: [{ e: 'eucharistcongress@org.va' }],
+		webs: ['https://www.congressieucaristici.va'],
+	},
+	{
+		nombre: 'Academia Pontificia Eclesiástica',
+		cat: 'academias',
+		sede: 'Piazza della Minerva 74, 00186 Roma',
+		telefonos: [{ n: '+39 06688201' }],
+		fax: [{ n: '+39 0668801274' }],
+		emails: [{ e: 'segreteriapae@libero.it' }],
+		webs: ['https://www.vatican.va/roman_curia/pontifical_academies/acdeccles/index_sp.htm'],
+	},
+	{
+		nombre: 'Academia Pontificia para la Vida',
+		cat: 'academias',
+		sede: 'Via della Conciliazione 1, 00193 Roma',
+		telefonos: [{ n: '+39 0669882423' }, { n: '+39 0669881693' }],
+		fax: [{ n: '+39 0669882014' }],
+		emails: [{ e: 'pav@pav.va' }],
+		webs: ['https://www.academiavita.org'],
+	},
+	{
+		nombre: 'Biblioteca Apostólica Vaticana',
+		cat: 'academias',
+		sede: 'Cortile del Belvedere, 00120 Città del Vaticano',
+		telefonos: [{ n: '+39 0669879411' }],
+		fax: [{ n: '+39 0669884795' }],
+		emails: [{ e: 'bav@vatlib.it' }],
+		webs: ['https://www.vatlib.it'],
+	},
+	{
+		nombre: 'Comisión Pontificia para la Tutela de Menores',
+		cat: 'academias',
+		sede: 'Largo Giovanni Paolo II, 00120 Città del Vaticano',
+		telefonos: [{ n: '+39 0669882420' }],
+		emails: [{ e: 'segretario@org.va' }],
+		webs: ['https://www.vatican.va/roman_curia/pontifical_commissions/tutela-minori/index_sp.htm'],
+	},
+];
+
+const catLabels: Record<string, string> = {
+	secretaria:    'Secretaría de Estado',
+	congregaciones:'Congregación',
+	dicasterios:   'Dicasterio',
+	tribunales:    'Tribunal',
+	consejos:      'Consejo Pontificio',
+	economia:      'Economía',
+	oficinas:      'Oficina',
+	academias:     'Academia e Institución',
+};
+
+const catTabs = [
+	{ id: 'todos',          label: 'Todos' },
+	{ id: 'secretaria',     label: 'Secretaría' },
+	{ id: 'congregaciones', label: 'Congregaciones' },
+	{ id: 'dicasterios',    label: 'Dicasterios' },
+	{ id: 'tribunales',     label: 'Tribunales' },
+	{ id: 'consejos',       label: 'Consejos' },
+	{ id: 'economia',       label: 'Economía' },
+	{ id: 'oficinas',       label: 'Oficinas' },
+	{ id: 'academias',      label: 'Academias' },
+].map(tab => ({
+	...tab,
+	count: tab.id === 'todos'
+		? organismos.length
+		: organismos.filter(o => o.cat === tab.id).length,
+}));
+
+function domain(url: string): string {
+	try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return url; }
+}
+
+function normalize(str: string): string {
+	return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<BaseHead
+			title={`Contacta a Roma — ${SITE_TITLE}`}
+			description="Directorio de contacto de la Curia Romana: Congregaciones, Dicasterios, Tribunales, Consejos Pontificios y más organismos de la Santa Sede."
+		/>
+		<style>
+			.page-header {
+				background: var(--bg-surface);
+				border-bottom: 1px solid var(--border);
+				padding: 3rem 2rem 2.5rem;
+				text-align: center;
+			}
+			.page-title {
+				font-family: var(--font-display);
+				font-size: clamp(1.8rem, 5vw, 2.8rem);
+				font-weight: 700;
+				color: var(--text);
+				margin: 0 0 0.5rem;
+			}
+			.page-subtitle {
+				font-family: var(--font-body);
+				font-size: 1rem;
+				font-style: italic;
+				color: var(--text-muted);
+				margin: 0;
+			}
+			main {
+				max-width: var(--max-wide);
+				margin: 0 auto;
+				padding: 2.5rem 2rem 5rem;
+			}
+			.controls {
+				display: flex;
+				flex-direction: column;
+				gap: 1rem;
+				margin-bottom: 2rem;
+			}
+			.search-input {
+				font-family: var(--font-body);
+				font-size: 1rem;
+				color: var(--text);
+				background: var(--bg-elevated);
+				border: 1px solid var(--border-light);
+				border-radius: 3px;
+				padding: 0.75rem 1rem;
+				width: 100%;
+				outline: none;
+				-webkit-appearance: none;
+				appearance: none;
+				transition: border-color 0.15s, box-shadow 0.15s;
+			}
+			.search-input:focus {
+				border-color: var(--red);
+				box-shadow: 0 0 0 3px color-mix(in srgb, var(--red) 10%, transparent);
+			}
+			.cat-tabs {
+				display: flex;
+				gap: 0.4rem;
+				overflow-x: auto;
+				scrollbar-width: none;
+				-ms-overflow-style: none;
+				padding-bottom: 2px;
+			}
+			.cat-tabs::-webkit-scrollbar { display: none; }
+			.cat-tab {
+				font-family: var(--font-ui);
+				font-size: 0.7rem;
+				font-weight: 700;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				color: var(--text-muted);
+				background: transparent;
+				border: 1px solid var(--border);
+				border-radius: 2px;
+				padding: 0.4em 0.85em;
+				cursor: pointer;
+				white-space: nowrap;
+				display: flex;
+				align-items: center;
+				gap: 0.4em;
+				transition: color 0.15s, border-color 0.15s, background 0.15s;
+			}
+			.cat-tab:hover {
+				color: var(--text);
+				border-color: var(--border-light);
+				background: var(--bg-elevated);
+			}
+			.cat-tab.active {
+				color: var(--red);
+				border-color: var(--red);
+				background: color-mix(in srgb, var(--red) 6%, transparent);
+			}
+			.tab-count {
+				font-size: 0.62rem;
+				color: var(--text-faint);
+				background: var(--bg-elevated);
+				border-radius: 2px;
+				padding: 0.1em 0.4em;
+			}
+			.cat-tab.active .tab-count {
+				background: color-mix(in srgb, var(--red) 12%, transparent);
+				color: var(--red);
+			}
+			.cards-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 1.25rem;
+			}
+			.card {
+				background: var(--bg-surface);
+				border: 1px solid var(--border);
+				border-radius: 3px;
+				display: flex;
+				flex-direction: column;
+				transition: border-color 0.2s;
+			}
+			.card:hover {
+				border-color: color-mix(in srgb, var(--red) 25%, var(--border));
+			}
+			.card-top {
+				padding: 1.1rem 1.1rem 0.75rem;
+				border-bottom: 1px solid var(--border-light);
+				display: flex;
+				flex-direction: column;
+				gap: 0.5rem;
+			}
+			.badge {
+				font-family: var(--font-ui);
+				font-size: 0.57rem;
+				font-weight: 700;
+				letter-spacing: 0.14em;
+				text-transform: uppercase;
+				color: var(--red);
+				background: color-mix(in srgb, var(--red) 8%, transparent);
+				border: 1px solid color-mix(in srgb, var(--red) 18%, transparent);
+				border-radius: 2px;
+				padding: 0.2em 0.55em;
+				align-self: flex-start;
+			}
+			.card-nombre {
+				font-family: var(--font-display);
+				font-size: 0.98rem;
+				font-weight: 700;
+				color: var(--text);
+				margin: 0;
+				line-height: 1.3;
+			}
+			.card-body {
+				padding: 0 1.1rem;
+				flex: 1;
+			}
+			.field {
+				display: grid;
+				grid-template-columns: 40px 1fr;
+				gap: 0.25rem 0.5rem;
+				align-items: start;
+				padding: 0.55rem 0;
+				border-bottom: 1px solid var(--border-light);
+			}
+			.field:last-child { border-bottom: none; }
+			.field-label {
+				font-family: var(--font-ui);
+				font-size: 0.58rem;
+				font-weight: 700;
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				color: var(--text-faint);
+				padding-top: 0.15rem;
+			}
+			.field-val {
+				display: flex;
+				flex-direction: column;
+				gap: 0.2rem;
+			}
+			.field-val > span, .fax-entry {
+				font-family: var(--font-ui);
+				font-size: 0.77rem;
+				color: var(--text-muted);
+				line-height: 1.4;
+			}
+			.postal {
+				font-size: 0.7rem !important;
+				color: var(--text-faint) !important;
+			}
+			.sub {
+				font-size: 0.68rem;
+				color: var(--text-faint);
+				margin-left: 0.2em;
+			}
+			.copyrow {
+				display: flex;
+				align-items: center;
+				gap: 0.35rem;
+			}
+			.tel-link, .email-link {
+				font-family: var(--font-ui);
+				font-size: 0.77rem;
+				color: var(--text-muted);
+				text-decoration: none;
+				flex: 1;
+				min-width: 0;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				transition: color 0.15s;
+			}
+			.tel-link:hover, .email-link:hover {
+				color: var(--red);
+				text-decoration: none;
+			}
+			.copy-btn {
+				flex-shrink: 0;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: 20px;
+				height: 20px;
+				border: 1px solid var(--border-light);
+				border-radius: 3px;
+				background: transparent;
+				color: var(--text-faint);
+				cursor: pointer;
+				padding: 0;
+				transition: color 0.15s, border-color 0.15s, background 0.15s;
+			}
+			.copy-btn:hover {
+				color: var(--text-muted);
+				border-color: var(--border);
+				background: var(--bg-elevated);
+			}
+			.copy-btn.copied {
+				color: #3a9e5a;
+				border-color: color-mix(in srgb, #3a9e5a 40%, transparent);
+				background: color-mix(in srgb, #3a9e5a 6%, transparent);
+			}
+			@media (prefers-color-scheme: dark) {
+				.copy-btn.copied {
+					color: #6fcf97;
+					border-color: color-mix(in srgb, #6fcf97 40%, transparent);
+					background: color-mix(in srgb, #6fcf97 8%, transparent);
+				}
+			}
+			.ico { width: 10px; height: 10px; display: block; }
+			.ico-check { display: none; }
+			.copy-btn.copied .ico-copy { display: none; }
+			.copy-btn.copied .ico-check { display: block; }
+			.card-footer {
+				padding: 0.75rem 1.1rem;
+				border-top: 1px solid var(--border-light);
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.4rem;
+				margin-top: auto;
+			}
+			.web-link {
+				font-family: var(--font-ui);
+				font-size: 0.65rem;
+				font-weight: 700;
+				letter-spacing: 0.05em;
+				color: var(--text-muted);
+				text-decoration: none;
+				display: flex;
+				align-items: center;
+				gap: 0.3em;
+				padding: 0.25em 0.6em;
+				border: 1px solid var(--border-light);
+				border-radius: 2px;
+				background: var(--bg-elevated);
+				transition: color 0.15s, border-color 0.15s;
+			}
+			.web-link svg { width: 10px; height: 10px; flex-shrink: 0; }
+			.web-link:hover {
+				color: var(--red);
+				border-color: color-mix(in srgb, var(--red) 30%, transparent);
+				text-decoration: none;
+			}
+			.empty-state {
+				text-align: center;
+				font-family: var(--font-body);
+				font-style: italic;
+				color: var(--text-muted);
+				padding: 3rem 0;
+				margin: 0;
+			}
+			@media (max-width: 900px) {
+				.cards-grid { grid-template-columns: repeat(2, 1fr); }
+			}
+			@media (max-width: 600px) {
+				main { padding: 2rem 1.25rem 3rem; }
+				.page-header { padding: 2rem 1.25rem; }
+				.cards-grid { grid-template-columns: 1fr; }
+				.field { grid-template-columns: 36px 1fr; }
+			}
+		</style>
+	</head>
+
+	<body>
+		<Header />
+
+		<div class="page-header">
+			<h1 class="page-title">Contacta a Roma</h1>
+			<p class="page-subtitle">Directorio de la Curia Romana y organismos de la Santa Sede</p>
+		</div>
+
+		<main>
+			<div class="controls">
+				<input
+					type="search"
+					id="search"
+					class="search-input"
+					placeholder="Buscar organismo, correo, dirección…"
+					autocomplete="off"
+					spellcheck="false"
+				/>
+				<div class="cat-tabs" role="tablist" aria-label="Filtrar por categoría">
+					{catTabs.map((tab, i) => (
+						<button
+							role="tab"
+							class:list={['cat-tab', { active: i === 0 }]}
+							data-cat={tab.id}
+							aria-selected={i === 0 ? 'true' : 'false'}
+						>
+							{tab.label}
+							<span class="tab-count">{tab.count}</span>
+						</button>
+					))}
+				</div>
+			</div>
+
+			<div class="cards-grid" id="grid">
+				{organismos.map(org => (
+					<article
+						class="card"
+						data-cat={org.cat}
+						data-search={normalize([
+							org.nombre,
+							org.sede ?? '',
+							org.postal ?? '',
+							...(org.emails?.map(em => em.e) ?? []),
+							catLabels[org.cat] ?? '',
+						].join(' '))}
+					>
+						<div class="card-top">
+							<span class="badge">{catLabels[org.cat]}</span>
+							<h2 class="card-nombre">{org.nombre}</h2>
+						</div>
+
+						<div class="card-body">
+							{(org.sede || org.postal) && (
+								<div class="field">
+									<span class="field-label">Sede</span>
+									<div class="field-val">
+										{org.sede && <span>{org.sede}</span>}
+										{org.postal && org.sede && org.sede !== org.postal && (
+											<span class="postal">CP: {org.postal}</span>
+										)}
+										{!org.sede && org.postal && <span>{org.postal}</span>}
+									</div>
+								</div>
+							)}
+
+							{org.telefonos && org.telefonos.length > 0 && (
+								<div class="field">
+									<span class="field-label">Tel.</span>
+									<div class="field-val">
+										{org.telefonos.map(t => (
+											<div class="copyrow">
+												<a href={`tel:${t.n.replace(/\s/g, '')}`} class="tel-link">
+													{t.n}{t.l && <span class="sub">({t.l})</span>}
+												</a>
+												<button class="copy-btn" data-copy={t.n} aria-label={`Copiar ${t.n}`} title="Copiar">
+													<svg class="ico ico-copy" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="5" y="5" width="9" height="10" rx="1.5"/><path d="M11 5V3a1 1 0 00-1-1H3a1 1 0 00-1 1v8a1 1 0 001 1h2"/></svg>
+													<svg class="ico ico-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5l3.5 3.5 6.5-8"/></svg>
+												</button>
+											</div>
+										))}
+									</div>
+								</div>
+							)}
+
+							{org.fax && org.fax.length > 0 && (
+								<div class="field">
+									<span class="field-label">Fax</span>
+									<div class="field-val">
+										{org.fax.map(f => (
+											<span class="fax-entry">{f.n}{f.l && <span class="sub">({f.l})</span>}</span>
+										))}
+									</div>
+								</div>
+							)}
+
+							{org.emails && org.emails.length > 0 && (
+								<div class="field">
+									<span class="field-label">Email</span>
+									<div class="field-val">
+										{org.emails.map(em => (
+											<div class="copyrow">
+												<a href={`mailto:${em.e}`} class="email-link">
+													{em.e}{em.l && <span class="sub">({em.l})</span>}
+												</a>
+												<button class="copy-btn" data-copy={em.e} aria-label={`Copiar ${em.e}`} title="Copiar">
+													<svg class="ico ico-copy" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="5" y="5" width="9" height="10" rx="1.5"/><path d="M11 5V3a1 1 0 00-1-1H3a1 1 0 00-1 1v8a1 1 0 001 1h2"/></svg>
+													<svg class="ico ico-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5l3.5 3.5 6.5-8"/></svg>
+												</button>
+											</div>
+										))}
+									</div>
+								</div>
+							)}
+						</div>
+
+						{org.webs && org.webs.length > 0 && (
+							<div class="card-footer">
+								{org.webs.map(w => (
+									<a href={w} target="_blank" rel="noopener noreferrer" class="web-link">
+										<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7" cy="7" r="5.5"/><path d="M7 1.5C5.5 3 4.5 5 4.5 7s1 4 2.5 5.5M7 1.5C8.5 3 9.5 5 9.5 7s-1 4-2.5 5.5M1.5 7h11"/></svg>
+										{domain(w)}
+									</a>
+								))}
+							</div>
+						)}
+					</article>
+				))}
+			</div>
+
+			<p class="empty-state" id="empty" hidden>
+				No se encontraron organismos con ese criterio.
+			</p>
+		</main>
+
+		<Footer />
+
+		<script is:inline>
+			const searchInput = document.getElementById('search');
+			const grid = document.getElementById('grid');
+			const empty = document.getElementById('empty');
+			const tabs = Array.from(document.querySelectorAll('.cat-tab'));
+			const cards = Array.from(grid.querySelectorAll('.card'));
+
+			let activeCat = 'todos';
+
+			function norm(str) {
+				return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+			}
+
+			function filter() {
+				const q = norm(searchInput.value);
+				let visible = 0;
+				cards.forEach(card => {
+					const matchCat = activeCat === 'todos' || card.dataset.cat === activeCat;
+					const matchQ = !q || card.dataset.search.includes(q);
+					const show = matchCat && matchQ;
+					card.style.display = show ? '' : 'none';
+					if (show) visible++;
+				});
+				empty.hidden = visible > 0;
+			}
+
+			tabs.forEach(tab => {
+				tab.addEventListener('click', () => {
+					tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+					tab.classList.add('active');
+					tab.setAttribute('aria-selected', 'true');
+					activeCat = tab.dataset.cat;
+					filter();
+				});
+			});
+
+			searchInput.addEventListener('input', filter);
+
+			document.querySelectorAll('.copy-btn').forEach(btn => {
+				btn.addEventListener('click', async () => {
+					const val = btn.dataset.copy;
+					try {
+						await navigator.clipboard.writeText(val);
+					} catch {
+						const ta = document.createElement('textarea');
+						ta.value = val;
+						ta.style.cssText = 'position:fixed;opacity:0';
+						document.body.appendChild(ta);
+						ta.select();
+						document.execCommand('copy');
+						document.body.removeChild(ta);
+					}
+					btn.classList.add('copied');
+					setTimeout(() => btn.classList.remove('copied'), 2000);
+				});
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,147 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import Header from '../../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<BaseHead title={`Todos los artículos — ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+		<style>
+			.page-header {
+				border-bottom: 1px solid var(--border);
+				padding: 3rem 2rem 2.5rem;
+				max-width: var(--max-wide);
+				margin: 0 auto;
+			}
+
+			.page-title {
+				font-family: var(--font-display);
+				font-size: 2.2rem;
+				color: var(--text);
+				margin: 0 0 0.25rem;
+			}
+
+			.page-count {
+				font-family: var(--font-ui);
+				font-size: 0.75rem;
+				font-weight: 700;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				color: var(--text-faint);
+				margin: 0;
+			}
+
+			main {
+				max-width: var(--max-wide);
+				margin: 0 auto;
+				padding: 0 2rem 5rem;
+			}
+
+			.posts-list {
+				display: flex;
+				flex-direction: column;
+				margin-top: 1rem;
+			}
+
+			.post-row {
+				display: grid;
+				grid-template-columns: 140px 1fr;
+				gap: 2.5rem;
+				padding: 1.5rem 0;
+				border-bottom: 1px solid var(--border);
+				text-decoration: none;
+				align-items: baseline;
+				transition: box-shadow 0.2s;
+			}
+
+			.post-row:hover {
+				text-decoration: none;
+				box-shadow: -2px 0 0 var(--red);
+			}
+
+			.post-row:first-child {
+				border-top: 1px solid var(--border);
+			}
+
+			.post-row-date {
+				font-family: var(--font-ui);
+				font-size: 0.68rem;
+				font-weight: 700;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				color: var(--text-faint);
+				white-space: nowrap;
+				padding-top: 0.2rem;
+			}
+
+			.post-row-title {
+				font-family: var(--font-display);
+				font-size: 1.2rem;
+				font-weight: 700;
+				color: var(--text);
+				margin: 0 0 0.3rem;
+				line-height: 1.25;
+				letter-spacing: -0.01em;
+				transition: color 0.2s;
+			}
+
+			.post-row:hover .post-row-title {
+				color: var(--red);
+			}
+
+			.post-row-desc {
+				font-family: var(--font-body);
+				font-size: 0.9rem;
+				font-style: italic;
+				color: var(--text-muted);
+				margin: 0;
+				line-height: 1.5;
+			}
+
+			@media (max-width: 640px) {
+				.post-row {
+					grid-template-columns: 1fr;
+					gap: 0.4rem;
+				}
+
+				main, .page-header {
+					padding-left: 1.25rem;
+					padding-right: 1.25rem;
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+		<Header />
+		<div class="page-header">
+			<h1 class="page-title">Todos los artículos</h1>
+			<p class="page-count">{posts.length} artículos</p>
+		</div>
+		<main>
+			<div class="posts-list">
+				{posts.map((post) => (
+					<a href={`/blog/${post.id}/`} class="post-row">
+						<span class="post-row-date">
+							<FormattedDate date={post.data.pubDate} />
+						</span>
+						<div>
+							<h2 class="post-row-title">{post.data.title}</h2>
+							<p class="post-row-desc">{post.data.description}</p>
+						</div>
+					</a>
+				))}
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>

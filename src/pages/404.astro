@@ -1,0 +1,146 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<BaseHead
+			title={`Página no encontrada — ${SITE_TITLE}`}
+			description="La página que buscas no existe o fue movida."
+		/>
+		<style>
+			main {
+				max-width: 640px;
+				margin: 0 auto;
+				padding: 6rem 2rem 8rem;
+				text-align: center;
+			}
+
+			.error-code {
+				font-family: var(--font-display);
+				font-size: clamp(5rem, 20vw, 10rem);
+				font-weight: 700;
+				color: var(--text);
+				line-height: 1;
+				opacity: 0.06;
+				margin: 0;
+				letter-spacing: -0.04em;
+			}
+
+			.error-rule {
+				width: 40px;
+				height: 2px;
+				background: var(--red);
+				border: none;
+				margin: 2rem auto;
+			}
+
+			.error-latin {
+				font-family: var(--font-body);
+				font-size: 1.35rem;
+				font-style: italic;
+				color: var(--text-muted);
+				margin: 0 0 0.4rem;
+			}
+
+			.error-translation {
+				font-family: var(--font-ui);
+				font-size: 0.72rem;
+				font-weight: 700;
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				color: var(--text-faint);
+				margin: 0 0 2.5rem;
+			}
+
+			.error-message {
+				font-family: var(--font-body);
+				font-size: 1rem;
+				color: var(--text-muted);
+				line-height: 1.8;
+				margin: 0 0 3rem;
+			}
+
+			.error-links {
+				display: flex;
+				gap: 1rem;
+				justify-content: center;
+				flex-wrap: wrap;
+			}
+
+			.btn-primary {
+				font-family: var(--font-ui);
+				font-size: 0.72rem;
+				font-weight: 700;
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				color: #FAFAF8;
+				background: var(--red);
+				border: 2px solid var(--red);
+				border-radius: 2px;
+				padding: 0.8em 2em;
+				text-decoration: none;
+				transition: background 0.15s, border-color 0.15s;
+			}
+
+			.btn-primary:hover {
+				background: var(--red-light);
+				border-color: var(--red-light);
+				color: #FAFAF8;
+				text-decoration: none;
+			}
+
+			.btn-secondary {
+				font-family: var(--font-ui);
+				font-size: 0.72rem;
+				font-weight: 700;
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				color: var(--text-muted);
+				background: transparent;
+				border: 2px solid var(--border-light);
+				border-radius: 2px;
+				padding: 0.8em 2em;
+				text-decoration: none;
+				transition: border-color 0.15s, color 0.15s;
+			}
+
+			.btn-secondary:hover {
+				border-color: var(--text-muted);
+				color: var(--text);
+				text-decoration: none;
+			}
+
+			@media (max-width: 640px) {
+				main {
+					padding: 4rem 1.25rem 6rem;
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+		<Header />
+
+		<main>
+			<p class="error-code" aria-hidden="true">404</p>
+			<hr class="error-rule" />
+			<p class="error-latin">Non est hic.</p>
+			<p class="error-translation">No está aquí</p>
+			<p class="error-message">
+				La página que buscas no existe o fue movida a otra dirección.<br />
+				Quizás un enlace roto, quizás un artículo eliminado.
+			</p>
+			<div class="error-links">
+				<a href="/" class="btn-primary">Volver al inicio</a>
+				<a href="/blog/" class="btn-secondary">Ver todos los artículos</a>
+			</div>
+		</main>
+
+		<Footer />
+	</body>
+</html>
