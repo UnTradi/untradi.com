@@ -1,1 +1,29 @@
 ErrorDocument 404 /404.html
+
+# Páginas movidas
+Redirect 301 /contacto /contacto-roma/
+
+# Podcast platforms
+Redirect 301 /anchor          https://anchor.fm/untradi
+Redirect 301 /breaker         https://www.breaker.audio/un-tradi-en-el-novus-ordo
+Redirect 301 /google-podcast  https://www.google.com/podcasts?feed=aHR0cHM6Ly9hbmNob3IuZm0vcy8xYTZhYzg0NC9wb2RjYXN0L3Jzcw==
+Redirect 301 /pocket-cast     https://pca.st/eq318gq0
+Redirect 301 /radio-public    https://radiopublic.com/un-tradi-en-el-novus-ordo-WlRP24
+Redirect 301 /spotify-podcast https://open.spotify.com/show/58P6usnZ1lS6TDp5NOqofY
+Redirect 301 /youtube-podcast https://www.youtube.com/playlist?list=PLUC7QcN3rnrvGrgzdO1xqB1u89fJBHolu
+
+# Redes sociales
+Redirect 301 /instagram https://instagram.com/tio_tradi
+Redirect 301 /facebook  https://facebook.com/TioTradi
+Redirect 301 /twitter   https://twitter.com/UnTradi
+Redirect 301 /whatsapp  https://whatsapp.com/channel/0029VaePhfh17EmnywYPho1t
+Redirect 301 /youtube   https://www.youtube.com/channel/UC3Ic_Os9T5UPJB448wkjgwg
+Redirect 301 /spotify   https://open.spotify.com/playlist/5WGyFEz6gDENIVXCmRMMEy
+
+# Recursos
+Redirect 301 /g_rosario         https://drive.google.com/open?id=1BvkxrsBZCTmxd3GRCYmbkFSvbtpYQMTZ
+Redirect 301 /g_pronunciacion   https://drive.google.com/open?id=12tQFFScDcAUIk1Vq7XVnTzoc1wg9X5J4
+Redirect 301 /g_mortificaciones https://drive.google.com/open?id=1KVtuPpEx1SRpzPazDEMrOoQ8aNPfSaAp
+Redirect 301 /g_conoce-tu-misa  https://drive.google.com/open?id=1REAuCrhthSpqSchP47PkN5PtNpB-1g-E
+Redirect 301 /d_alta-importancia https://www.dropbox.com/sh/i71hpyr3i1xz5io/AABLl8MqFzth3ugCM5iKSzAAa?dl=0
+Redirect 301 /drive             https://drive.google.com/drive/folders/1CKNMBsV9Ffxube-Irl3YcwK2PL7Tgelb?usp=share_link
