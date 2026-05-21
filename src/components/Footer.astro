@@ -58,7 +58,11 @@ const year = new Date().getFullYear();
 
 <style>
 	footer {
-		background: var(--bg-surface);
+		background: linear-gradient(
+			to bottom,
+			var(--bg-elevated) 0%,
+			var(--bg-surface) 30%
+		);
 		border-top: 1px solid var(--border);
 		padding: 0 2rem 2rem;
 		margin-top: 0;
@@ -71,10 +75,10 @@ const year = new Date().getFullYear();
 		top: 0;
 		left: 50%;
 		transform: translateX(-50%);
-		width: 60%;
-		height: 1px;
-		background: linear-gradient(90deg, transparent, var(--gold), transparent);
-		opacity: 0.5;
+		width: 70%;
+		height: 2px;
+		background: linear-gradient(90deg, transparent, var(--gold), var(--red), var(--gold), transparent);
+		opacity: 0.4;
 	}
 
 	.footer-inner {

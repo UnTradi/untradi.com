@@ -41,20 +41,35 @@ import SocialLinks from './SocialLinks.astro';
 	header::before {
 		content: '';
 		display: block;
-		height: 3px;
-		background: linear-gradient(90deg, var(--red-dark), var(--red), var(--gold), var(--red), var(--red-dark));
-		background-size: 200% 100%;
-		animation: gradientShift 6s ease infinite;
+		height: 4px;
+		background: linear-gradient(
+			90deg,
+			var(--red-dark) 0%,
+			var(--red) 25%,
+			var(--gold) 50%,
+			var(--red) 75%,
+			var(--red-dark) 100%
+		);
+		background-size: 300% 100%;
+		animation: gradientShift 8s ease infinite;
+		box-shadow: 0 1px 8px color-mix(in srgb, var(--red) 35%, transparent);
 	}
 
 	header.is-scrolled {
-		box-shadow: 0 2px 20px color-mix(in srgb, var(--text) 12%, transparent);
+		box-shadow:
+			0 2px 0 color-mix(in srgb, var(--gold) 8%, transparent),
+			0 4px 24px color-mix(in srgb, var(--text) 14%, transparent);
 	}
 
 	/* ── Banda superior ─────────────────────── */
 
 	.header-band {
-		background: var(--bg-elevated);
+		background: linear-gradient(
+			to right,
+			var(--bg-elevated),
+			color-mix(in srgb, var(--gold-pale) 30%, var(--bg-elevated)),
+			var(--bg-elevated)
+		);
 		border-bottom: 1px solid var(--border-light);
 	}
 
@@ -112,7 +127,11 @@ import SocialLinks from './SocialLinks.astro';
 	/* ── Masthead principal ─────────────────── */
 
 	.header-main {
-		background: var(--bg-surface);
+		background: linear-gradient(
+			180deg,
+			color-mix(in srgb, var(--gold-pale) 20%, var(--bg-surface)) 0%,
+			var(--bg-surface) 100%
+		);
 	}
 
 	.header-main-inner {
@@ -206,16 +225,17 @@ import SocialLinks from './SocialLinks.astro';
 </style>
 
 <script>
-	const header = document.getElementById('site-header');
+	function initHeader() {
+		const header = document.getElementById('site-header');
+		if (!header) return;
 
-	const updateHeader = () => {
-		if (window.scrollY > 20) {
-			header?.classList.add('is-scrolled');
-		} else {
-			header?.classList.remove('is-scrolled');
-		}
-	};
+		const updateHeader = () => {
+			header.classList.toggle('is-scrolled', window.scrollY > 20);
+		};
 
-	window.addEventListener('scroll', updateHeader, { passive: true });
-	updateHeader();
+		window.addEventListener('scroll', updateHeader, { passive: true });
+		updateHeader();
+	}
+
+	document.addEventListener('astro:page-load', initHeader);
 </script>

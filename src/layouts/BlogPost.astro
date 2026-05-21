@@ -488,97 +488,94 @@ const articleJsonLd = {
 		<Footer />
 
 		<script>
-			/* ── Reading time ─────────────────── */
-			const prose = document.getElementById('article-prose');
-			const rtVal = document.getElementById('reading-time-val');
-			if (prose && rtVal) {
-				const words = prose.innerText.trim().split(/\s+/).length;
-				const mins = Math.max(1, Math.round(words / 200));
-				rtVal.textContent = `${mins} min de lectura`;
-			}
+			function initArticle() {
+				/* ── Reading time ─────────────────── */
+				const prose = document.getElementById('article-prose');
+				const rtVal = document.getElementById('reading-time-val');
+				if (prose && rtVal) {
+					const words = prose.innerText.trim().split(/\s+/).length;
+					const mins = Math.max(1, Math.round(words / 200));
+					rtVal.textContent = `${mins} min de lectura`;
+				}
 
-			/* ── Table of contents ────────────── */
-			const headings = document.querySelectorAll<HTMLElement>('#article-prose h2, #article-prose h3');
-			const tocList = document.getElementById('toc-list');
-			const tocBox = document.getElementById('toc-box');
-			const tocAside = document.getElementById('toc-aside');
+				/* ── Table of contents ────────────── */
+				const headings = document.querySelectorAll<HTMLElement>('#article-prose h2, #article-prose h3');
+				const tocList = document.getElementById('toc-list');
+				const tocAside = document.getElementById('toc-aside');
 
-			if (headings.length >= 2 && tocList && tocBox) {
-				headings.forEach((h, i) => {
-					if (!h.id) h.id = `section-${i}`;
-					const li = document.createElement('li');
-					const a = document.createElement('a');
-					a.href = `#${h.id}`;
-					a.textContent = h.textContent ?? '';
-					a.className = 'toc-link';
-					a.dataset.level = h.tagName === 'H3' ? '3' : '2';
-					a.addEventListener('click', (e) => {
-						e.preventDefault();
-						const target = document.getElementById(h.id);
-						if (target) {
-							const offset = 120;
-							const top = target.getBoundingClientRect().top + window.scrollY - offset;
-							window.scrollTo({ top, behavior: 'smooth' });
-						}
-					});
-					li.appendChild(a);
-					tocList.appendChild(li);
-				});
+				if (tocList) tocList.innerHTML = '';
 
-				/* Active section on scroll */
-				const tocLinks = tocList.querySelectorAll<HTMLAnchorElement>('.toc-link');
-				const updateActive = () => {
-					let active = 0;
+				if (headings.length >= 2 && tocList) {
 					headings.forEach((h, i) => {
-						if (h.getBoundingClientRect().top < 160) active = i;
+						if (!h.id) h.id = `section-${i}`;
+						const li = document.createElement('li');
+						const a = document.createElement('a');
+						a.href = `#${h.id}`;
+						a.textContent = h.textContent ?? '';
+						a.className = 'toc-link';
+						a.dataset.level = h.tagName === 'H3' ? '3' : '2';
+						a.addEventListener('click', (e) => {
+							e.preventDefault();
+							const target = document.getElementById(h.id);
+							if (target) {
+								const top = target.getBoundingClientRect().top + window.scrollY - 120;
+								window.scrollTo({ top, behavior: 'smooth' });
+							}
+						});
+						li.appendChild(a);
+						tocList.appendChild(li);
 					});
-					tocLinks.forEach((link, i) => {
-						link.classList.toggle('is-active', i === active);
+
+					const tocLinks = tocList.querySelectorAll<HTMLAnchorElement>('.toc-link');
+					const updateActive = () => {
+						let active = 0;
+						headings.forEach((h, i) => {
+							if (h.getBoundingClientRect().top < 160) active = i;
+						});
+						tocLinks.forEach((link, i) => link.classList.toggle('is-active', i === active));
+					};
+					window.addEventListener('scroll', updateActive, { passive: true });
+					updateActive();
+				} else if (tocAside) {
+					tocAside.style.display = 'none';
+				}
+
+				/* ── Scroll to top ────────────────── */
+				const scrollTopBtn = document.getElementById('scroll-top');
+				if (scrollTopBtn) {
+					const toggle = () => scrollTopBtn.classList.toggle('is-visible', window.scrollY > 400);
+					window.addEventListener('scroll', toggle, { passive: true });
+					scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+					toggle();
+				}
+
+				/* ── Magnetic effect on back link ─── */
+				const backLink = document.querySelector<HTMLElement>('.back-link');
+				if (backLink) {
+					backLink.addEventListener('mousemove', (e) => {
+						const rect = backLink.getBoundingClientRect();
+						const dx = (e.clientX - rect.left - rect.width / 2) * 0.2;
+						const dy = (e.clientY - rect.top - rect.height / 2) * 0.2;
+						backLink.style.transform = `translate(${dx}px, ${dy}px)`;
+						backLink.style.transition = 'transform 0.1s ease, color 0.2s, gap 0.25s';
 					});
-				};
-				window.addEventListener('scroll', updateActive, { passive: true });
-				updateActive();
-			} else if (tocAside) {
-				tocAside.style.display = 'none';
+					backLink.addEventListener('mouseleave', () => {
+						backLink.style.transform = '';
+						backLink.style.transition = 'transform 0.35s var(--ease-out-expo), color 0.2s, gap 0.25s';
+					});
+				}
+
+				/* ── Reveal scroll observer ───────── */
+				const revealObs = new IntersectionObserver(
+					(entries) => entries.forEach((e) => {
+						if (e.isIntersecting) { e.target.classList.add('is-visible'); revealObs.unobserve(e.target); }
+					}),
+					{ threshold: 0.07 }
+				);
+				document.querySelectorAll('.reveal').forEach((el) => revealObs.observe(el));
 			}
 
-			/* ── Scroll to top ────────────────── */
-			const scrollTopBtn = document.getElementById('scroll-top');
-			if (scrollTopBtn) {
-				const toggle = () => {
-					scrollTopBtn.classList.toggle('is-visible', window.scrollY > 400);
-				};
-				window.addEventListener('scroll', toggle, { passive: true });
-				scrollTopBtn.addEventListener('click', () => {
-					window.scrollTo({ top: 0, behavior: 'smooth' });
-				});
-				toggle();
-			}
-
-			/* ── Magnetic effect on back link ─── */
-			const backLink = document.querySelector<HTMLElement>('.back-link');
-			if (backLink) {
-				backLink.addEventListener('mousemove', (e) => {
-					const rect = backLink.getBoundingClientRect();
-					const dx = (e.clientX - rect.left - rect.width / 2) * 0.2;
-					const dy = (e.clientY - rect.top - rect.height / 2) * 0.2;
-					backLink.style.transform = `translate(${dx}px, ${dy}px)`;
-					backLink.style.transition = 'transform 0.1s ease, color 0.2s, gap 0.25s';
-				});
-				backLink.addEventListener('mouseleave', () => {
-					backLink.style.transform = '';
-					backLink.style.transition = 'transform 0.35s var(--ease-out-expo), color 0.2s, gap 0.25s';
-				});
-			}
-
-			/* ── Reveal scroll observer ───────── */
-			const revealObs = new IntersectionObserver(
-				(entries) => entries.forEach((e) => {
-					if (e.isIntersecting) { e.target.classList.add('is-visible'); revealObs.unobserve(e.target); }
-				}),
-				{ threshold: 0.07 }
-			);
-			document.querySelectorAll('.reveal').forEach((el) => revealObs.observe(el));
+			document.addEventListener('astro:page-load', initArticle);
 		</script>
 	</body>
 </html>
