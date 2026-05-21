@@ -1,63 +1,148 @@
-# Astro Starter Kit: Blog
+# Un Tradi en el Novus Ordo
 
-```sh
-npm create astro@latest -- --template blog
+[![Deploy to GitHub Pages](https://github.com/christianecg/untradi.com/actions/workflows/deploy.yml/badge.svg)](https://github.com/christianecg/untradi.com/actions/workflows/deploy.yml)
+
+Sitio web y blog de **[untradi.com](https://untradi.com)** — reflexiones sobre el tradicionalismo católico y la liturgia desde dentro del Novus Ordo.
+
+Construido con [Astro 6](https://astro.build) y desplegado en [GitHub Pages](https://pages.github.com).
+
+---
+
+## Tecnología
+
+| Capa | Herramienta |
+|---|---|
+| Framework | [Astro 6](https://astro.build) — sitio 100 % estático |
+| Contenido | Markdown / MDX |
+| Tipografía | Playfair Display · Source Serif 4 · Lato (Google Fonts) |
+| OG Images | [Satori](https://github.com/vercel/satori) + sharp |
+| Deploy | GitHub Actions → GitHub Pages |
+| Dominio | `untradi.com` vía registro externo + CNAME |
+
+---
+
+## Desarrollo local
+
+Requiere **Node.js ≥ 22**.
+
+```bash
+# Instalar dependencias
+npm install
+
+# Servidor de desarrollo con hot-reload
+npm run dev
+
+# Build de producción
+npm run build
+
+# Vista previa del build
+npm run preview
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+El servidor de desarrollo arranca en `http://localhost:4321` por defecto.
 
-Features:
+---
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and Open Graph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
+## Estructura del proyecto
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
+```
+untradi.com/
+├── .github/
+│   └── workflows/
+│       └── deploy.yml          # CI/CD → GitHub Pages
 ├── public/
+│   ├── CNAME                   # Dominio personalizado para GitHub Pages
+│   ├── favicon.svg
+│   └── robots.txt
 ├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+│   ├── assets/                 # Imágenes y fuentes locales
+│   ├── components/
+│   │   ├── BaseHead.astro      # <head> con SEO y View Transitions
+│   │   ├── Header.astro
+│   │   ├── Footer.astro
+│   │   ├── FormattedDate.astro
+│   │   └── SocialLinks.astro
+│   ├── content/
+│   │   └── blog/               # Artículos en Markdown
+│   ├── layouts/
+│   │   ├── BlogPost.astro      # Layout para artículos
+│   │   └── Redirect.astro      # Páginas de redirección con diseño propio
+│   ├── pages/
+│   │   ├── index.astro         # Portada
+│   │   ├── blog/               # Listado y rutas dinámicas
+│   │   ├── categoria/          # Páginas por categoría
+│   │   ├── 404.astro
+│   │   ├── faq.astro
+│   │   ├── contacto-roma.astro
+│   │   ├── og/                 # Generador de imágenes Open Graph
+│   │   ├── rss.xml.js
+│   │   └── [instagram, youtube, spotify, …].astro   # Redirecciones
+│   ├── styles/
+│   │   └── global.css          # Variables de color, tipografía y animaciones
+│   └── consts.ts               # Constantes: título, categorías, redes sociales
+└── astro.config.mjs
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+---
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## Escribir un artículo nuevo
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+1. Crear un archivo `.md` en `src/content/blog/`:
 
-Any static assets, like images, can be placed in the `public/` directory.
+```
+src/content/blog/mi-nuevo-articulo.md
+```
 
-## 🧞 Commands
+2. Completar el frontmatter:
 
-All commands are run from the root of the project, from a terminal:
+```yaml
+---
+title: 'Título del artículo'
+description: 'Resumen breve que aparece en listados y en redes sociales.'
+pubDate: '2025-01-15'
+category: 'liturgia'          # ver categorías disponibles en src/consts.ts
+featured: false               # true = aparece como artículo destacado en portada
+# updatedDate: '2025-02-01'   # opcional
+---
+```
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+3. Escribir el contenido en Markdown. El primer párrafo recibirá automáticamente una capitular decorativa.
 
-## 👀 Want to learn more?
+**Categorías disponibles:** `liturgia` · `misa-tradicional` · `fe` · `oracion` · `apologetica` · `historia`
 
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+---
 
-## Credit
+## Redirecciones
 
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+Las redirecciones (redes sociales, podcast, recursos) se gestionan como páginas `.astro` individuales en `src/pages/`, usando el layout `src/layouts/Redirect.astro`. Para añadir una nueva:
+
+```astro
+---
+// src/pages/mi-enlace.astro
+import Redirect from '../layouts/Redirect.astro';
+---
+<Redirect
+  destination="https://destino.com"
+  label="Nombre visible"
+  category="Categoría"
+/>
+```
+
+Esto genera una página en `/mi-enlace/` que redirige instantáneamente vía JS y tiene un fallback visual con el diseño del sitio. Añadir la ruta a la lista `REDIRECT_PATHS` en `astro.config.mjs` para excluirla del sitemap.
+
+---
+
+## Despliegue
+
+El despliegue es automático. Cualquier push a la rama `main` dispara el workflow de GitHub Actions (`.github/workflows/deploy.yml`), que:
+
+1. Instala las dependencias con `npm ci`
+2. Ejecuta `npm run build`
+3. Sube el directorio `dist/` a GitHub Pages
+
+---
+
+## Licencia
+
+El código fuente de este sitio está bajo la [licencia MIT](LICENSE.md).  
+El contenido editorial (artículos, textos, imágenes) es propiedad de sus autores — todos los derechos reservados.
