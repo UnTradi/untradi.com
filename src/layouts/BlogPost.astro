@@ -48,30 +48,36 @@ const articleJsonLd = {
 		/>
 		<script type="application/ld+json" set:html={JSON.stringify(articleJsonLd)} />
 		<style>
+			/* ── Reading progress ─────────────────────── */
+
 			.reading-progress {
 				position: fixed;
 				top: 0;
 				left: 0;
 				width: 100%;
-				height: 2px;
-				background: var(--red);
+				height: 3px;
+				background: linear-gradient(90deg, var(--red), var(--gold), var(--red-light));
+				background-size: 200% 100%;
+				animation: gradientShift 4s ease infinite;
 				transform-origin: left center;
 				transform: scaleX(0);
 				z-index: 200;
+				box-shadow: 0 0 10px color-mix(in srgb, var(--red) 50%, transparent);
 			}
 
 			@supports (animation-timeline: scroll()) {
 				.reading-progress {
-					animation: reading-progress linear;
-					animation-timeline: scroll();
-					animation-range: 0 100%;
+					animation: reading-progress linear, gradientShift 4s ease infinite;
+					animation-timeline: scroll(), auto;
+					animation-range: 0 100%, auto;
 				}
-
 				@keyframes reading-progress {
 					from { transform: scaleX(0); }
-					to { transform: scaleX(1); }
+					to   { transform: scaleX(1); }
 				}
 			}
+
+			/* ── Layout ───────────────────────────────── */
 
 			.article-wrap {
 				max-width: var(--max-wide);
@@ -79,11 +85,37 @@ const articleJsonLd = {
 				padding: 0 2rem;
 			}
 
+			.article-layout {
+				display: grid;
+				grid-template-columns: 1fr 260px;
+				gap: 4rem;
+				align-items: start;
+			}
+
+			/* ── Article header ───────────────────────── */
+
 			.article-header {
 				max-width: var(--max-prose);
 				margin: 4.5rem auto 3.5rem;
 				text-align: center;
+				animation: fadeInUp 0.8s var(--ease-out-expo) both;
 			}
+
+			.article-eyebrow {
+				font-family: var(--font-ui);
+				font-size: 0.62rem;
+				font-weight: 700;
+				letter-spacing: 0.22em;
+				text-transform: uppercase;
+				color: var(--gold);
+				margin: 0 0 1.25rem;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 0.6em;
+			}
+
+			.article-eyebrow-ornament { font-size: 0.45em; opacity: 0.7; }
 
 			.article-title {
 				font-family: var(--font-display);
@@ -100,8 +132,16 @@ const articleJsonLd = {
 				font-size: 1.15rem;
 				font-style: italic;
 				color: var(--text-muted);
-				margin: 0 0 1.5rem;
+				margin: 0 0 1.25rem;
 				line-height: 1.65;
+			}
+
+			.article-meta-row {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 1rem;
+				flex-wrap: wrap;
 			}
 
 			.article-meta {
@@ -113,18 +153,60 @@ const articleJsonLd = {
 				color: var(--text-faint);
 			}
 
-			.article-rule {
-				width: 40px;
-				height: 2px;
-				background: var(--red);
-				border: none;
-				margin: 2.5rem auto;
+			.article-meta-sep {
+				color: var(--border);
+				font-size: 0.6rem;
 			}
+
+			.reading-time {
+				font-family: var(--font-ui);
+				font-size: 0.72rem;
+				font-weight: 700;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: var(--text-faint);
+				display: flex;
+				align-items: center;
+				gap: 0.4em;
+			}
+
+			.reading-time-icon { font-size: 0.9em; }
+
+			.article-rule {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 0.75rem;
+				margin: 2.5rem auto;
+				border: none;
+			}
+
+			.article-rule::before,
+			.article-rule::after {
+				content: '';
+				display: block;
+				width: 60px;
+				height: 1px;
+				background: linear-gradient(to right, transparent, var(--gold));
+			}
+
+			.article-rule::after {
+				background: linear-gradient(to left, transparent, var(--gold));
+			}
+
+			.article-rule-cross {
+				font-size: 1rem;
+				color: var(--gold);
+				opacity: 0.5;
+			}
+
+			/* ── Prose body ───────────────────────────── */
 
 			.prose {
 				max-width: var(--max-prose);
 				margin: 0 auto;
 				padding-bottom: 5rem;
+				animation: fadeInUp 1s 0.2s var(--ease-out-expo) both;
 			}
 
 			.prose a {
@@ -140,6 +222,95 @@ const articleJsonLd = {
 				color: var(--red-light);
 				text-decoration-color: var(--red-light);
 			}
+
+			/* ── Table of contents ────────────────────── */
+
+			.toc-aside {
+				position: sticky;
+				top: calc(80px + 28px + 2rem);
+				padding-top: 4.5rem;
+				max-height: calc(100vh - 160px);
+				overflow-y: auto;
+				scrollbar-width: none;
+			}
+
+			.toc-aside::-webkit-scrollbar { display: none; }
+
+			.toc-box {
+				border: 1px solid var(--border);
+				padding: 1.5rem;
+				background: var(--bg-surface);
+				animation: fadeIn 0.8s 0.4s both;
+			}
+
+			.toc-title {
+				font-family: var(--font-ui);
+				font-size: 0.6rem;
+				font-weight: 700;
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+				color: var(--gold);
+				margin: 0 0 1rem;
+				display: flex;
+				align-items: center;
+				gap: 0.5em;
+			}
+
+			.toc-title::after {
+				content: '';
+				flex: 1;
+				height: 1px;
+				background: var(--border);
+			}
+
+			.toc-list {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+				display: flex;
+				flex-direction: column;
+				gap: 0.05rem;
+			}
+
+			.toc-link {
+				display: block;
+				font-family: var(--font-ui);
+				font-size: 0.75rem;
+				line-height: 1.45;
+				color: var(--text-muted);
+				text-decoration: none;
+				padding: 0.3em 0.5em 0.3em 0.75em;
+				border-left: 2px solid transparent;
+				border-radius: 0 2px 2px 0;
+				transition: color 0.2s, border-color 0.2s, background 0.2s, padding-left 0.2s var(--ease-out-expo);
+			}
+
+			.toc-link:hover {
+				color: var(--text);
+				border-left-color: var(--border);
+				text-decoration: none;
+			}
+
+			.toc-link.is-active {
+				color: var(--red);
+				border-left-color: var(--red);
+				background: color-mix(in srgb, var(--red) 5%, transparent);
+				padding-left: 1em;
+				font-weight: 700;
+			}
+
+			.toc-link[data-level="3"] {
+				padding-left: 1.5em;
+				font-size: 0.7rem;
+				opacity: 0.8;
+			}
+
+			.toc-link[data-level="3"].is-active {
+				padding-left: 1.75em;
+				opacity: 1;
+			}
+
+			/* ── Article footer ───────────────────────── */
 
 			.article-footer {
 				max-width: var(--max-prose);
@@ -163,20 +334,25 @@ const articleJsonLd = {
 				display: flex;
 				align-items: center;
 				gap: 0.5em;
-				transition: color 0.15s;
+				transition: color 0.2s, gap 0.25s var(--ease-out-expo);
 			}
 
-			.back-link::before {
-				content: '←';
+			.back-link-arrow {
 				font-family: var(--font-body);
 				font-size: 1rem;
 				font-weight: 400;
 				letter-spacing: 0;
+				transition: transform 0.25s var(--ease-out-expo);
 			}
 
 			.back-link:hover {
 				color: var(--red);
 				text-decoration: none;
+				gap: 0.8em;
+			}
+
+			.back-link:hover .back-link-arrow {
+				transform: translateX(-5px);
 			}
 
 			.updated-note {
@@ -186,13 +362,65 @@ const articleJsonLd = {
 				font-style: italic;
 			}
 
+			/* ── Scroll to top ────────────────────────── */
+
+			.scroll-top-btn {
+				position: fixed;
+				bottom: 2rem;
+				right: 2rem;
+				width: 44px;
+				height: 44px;
+				background: var(--bg-surface);
+				border: 1px solid var(--border);
+				color: var(--text-muted);
+				font-size: 1.1rem;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				cursor: pointer;
+				border-radius: 2px;
+				opacity: 0;
+				transform: translateY(12px);
+				transition:
+					opacity 0.3s,
+					transform 0.3s var(--ease-out-expo),
+					color 0.2s,
+					border-color 0.2s,
+					background 0.2s,
+					box-shadow 0.2s;
+				z-index: 50;
+				pointer-events: none;
+			}
+
+			.scroll-top-btn.is-visible {
+				opacity: 1;
+				transform: none;
+				pointer-events: auto;
+			}
+
+			.scroll-top-btn:hover {
+				color: var(--red);
+				border-color: color-mix(in srgb, var(--red) 40%, var(--border));
+				background: color-mix(in srgb, var(--red) 5%, var(--bg-surface));
+				box-shadow: 0 4px 16px color-mix(in srgb, var(--red) 15%, transparent);
+				transform: translateY(-3px);
+			}
+
+			/* ── Responsive ───────────────────────────── */
+
+			@media (max-width: 900px) {
+				.article-layout {
+					grid-template-columns: 1fr;
+				}
+				.toc-aside {
+					display: none;
+				}
+			}
+
 			@media (max-width: 640px) {
-				.article-wrap {
-					padding: 0 1.25rem;
-				}
-				.article-header {
-					margin-top: 3rem;
-				}
+				.article-wrap { padding: 0 1.25rem; }
+				.article-header { margin-top: 3rem; }
+				.scroll-top-btn { bottom: 1.25rem; right: 1.25rem; }
 			}
 		</style>
 	</head>
@@ -200,25 +428,52 @@ const articleJsonLd = {
 	<body>
 		<div class="reading-progress" aria-hidden="true"></div>
 		<Header />
+
 		<main>
 			<div class="article-wrap">
 				<header class="article-header">
+					<p class="article-eyebrow">
+						<span class="article-eyebrow-ornament">✦</span>
+						Artículo
+						<span class="article-eyebrow-ornament">✦</span>
+					</p>
 					<h1 class="article-title">{title}</h1>
 					{description && (
 						<p class="article-description">{description}</p>
 					)}
-					<div class="article-meta">
-						<FormattedDate date={pubDate} />
+					<div class="article-meta-row">
+						<span class="article-meta">
+							<FormattedDate date={pubDate} />
+						</span>
+						<span class="article-meta-sep" aria-hidden="true">·</span>
+						<span class="reading-time" id="reading-time" aria-label="Tiempo de lectura">
+							<span class="reading-time-icon">☩</span>
+							<span id="reading-time-val">...</span>
+						</span>
 					</div>
-					<hr class="article-rule" />
+					<div class="article-rule" role="presentation">
+						<span class="article-rule-cross">✠</span>
+					</div>
 				</header>
 
-				<article class="prose">
-					<slot />
-				</article>
+				<div class="article-layout">
+					<article class="prose" id="article-prose">
+						<slot />
+					</article>
+
+					<aside class="toc-aside" id="toc-aside" aria-label="Tabla de contenidos">
+						<div class="toc-box" id="toc-box">
+							<p class="toc-title">Contenido</p>
+							<ol class="toc-list" id="toc-list"></ol>
+						</div>
+					</aside>
+				</div>
 
 				<footer class="article-footer">
-					<a href="/" class="back-link">Volver al inicio</a>
+					<a href="/" class="back-link">
+						<span class="back-link-arrow">←</span>
+						Volver al inicio
+					</a>
 					{updatedDate && (
 						<span class="updated-note">
 							Actualizado el <FormattedDate date={updatedDate} />
@@ -227,6 +482,103 @@ const articleJsonLd = {
 				</footer>
 			</div>
 		</main>
+
+		<button class="scroll-top-btn" id="scroll-top" aria-label="Volver al inicio de la página" title="Volver arriba">↑</button>
+
 		<Footer />
+
+		<script>
+			/* ── Reading time ─────────────────── */
+			const prose = document.getElementById('article-prose');
+			const rtVal = document.getElementById('reading-time-val');
+			if (prose && rtVal) {
+				const words = prose.innerText.trim().split(/\s+/).length;
+				const mins = Math.max(1, Math.round(words / 200));
+				rtVal.textContent = `${mins} min de lectura`;
+			}
+
+			/* ── Table of contents ────────────── */
+			const headings = document.querySelectorAll<HTMLElement>('#article-prose h2, #article-prose h3');
+			const tocList = document.getElementById('toc-list');
+			const tocBox = document.getElementById('toc-box');
+			const tocAside = document.getElementById('toc-aside');
+
+			if (headings.length >= 2 && tocList && tocBox) {
+				headings.forEach((h, i) => {
+					if (!h.id) h.id = `section-${i}`;
+					const li = document.createElement('li');
+					const a = document.createElement('a');
+					a.href = `#${h.id}`;
+					a.textContent = h.textContent ?? '';
+					a.className = 'toc-link';
+					a.dataset.level = h.tagName === 'H3' ? '3' : '2';
+					a.addEventListener('click', (e) => {
+						e.preventDefault();
+						const target = document.getElementById(h.id);
+						if (target) {
+							const offset = 120;
+							const top = target.getBoundingClientRect().top + window.scrollY - offset;
+							window.scrollTo({ top, behavior: 'smooth' });
+						}
+					});
+					li.appendChild(a);
+					tocList.appendChild(li);
+				});
+
+				/* Active section on scroll */
+				const tocLinks = tocList.querySelectorAll<HTMLAnchorElement>('.toc-link');
+				const updateActive = () => {
+					let active = 0;
+					headings.forEach((h, i) => {
+						if (h.getBoundingClientRect().top < 160) active = i;
+					});
+					tocLinks.forEach((link, i) => {
+						link.classList.toggle('is-active', i === active);
+					});
+				};
+				window.addEventListener('scroll', updateActive, { passive: true });
+				updateActive();
+			} else if (tocAside) {
+				tocAside.style.display = 'none';
+			}
+
+			/* ── Scroll to top ────────────────── */
+			const scrollTopBtn = document.getElementById('scroll-top');
+			if (scrollTopBtn) {
+				const toggle = () => {
+					scrollTopBtn.classList.toggle('is-visible', window.scrollY > 400);
+				};
+				window.addEventListener('scroll', toggle, { passive: true });
+				scrollTopBtn.addEventListener('click', () => {
+					window.scrollTo({ top: 0, behavior: 'smooth' });
+				});
+				toggle();
+			}
+
+			/* ── Magnetic effect on back link ─── */
+			const backLink = document.querySelector<HTMLElement>('.back-link');
+			if (backLink) {
+				backLink.addEventListener('mousemove', (e) => {
+					const rect = backLink.getBoundingClientRect();
+					const dx = (e.clientX - rect.left - rect.width / 2) * 0.2;
+					const dy = (e.clientY - rect.top - rect.height / 2) * 0.2;
+					backLink.style.transform = `translate(${dx}px, ${dy}px)`;
+					backLink.style.transition = 'transform 0.1s ease, color 0.2s, gap 0.25s';
+				});
+				backLink.addEventListener('mouseleave', () => {
+					backLink.style.transform = '';
+					backLink.style.transition = 'transform 0.35s var(--ease-out-expo), color 0.2s, gap 0.25s';
+				});
+			}
+
+			/* ── Reveal scroll observer ───────── */
+			const revealObs = new IntersectionObserver(
+				(entries) => entries.forEach((e) => {
+					if (e.isIntersecting) { e.target.classList.add('is-visible'); revealObs.unobserve(e.target); }
+				}),
+				{ threshold: 0.07 }
+			);
+			document.querySelectorAll('.reveal').forEach((el) => revealObs.observe(el));
+		</script>
 	</body>
 </html>

@@ -6,13 +6,15 @@ const year = new Date().getFullYear();
 ---
 
 <footer>
+	<div class="footer-glow" aria-hidden="true"></div>
 	<div class="footer-inner">
-		<div class="footer-top">
-			<div class="footer-brand">
-				<p class="footer-title">{SITE_TITLE}</p>
-				<p class="footer-tagline">Reflexiones sobre el tradicionalismo católico y la liturgia</p>
-			</div>
+		<div class="footer-brand-banner">
+			<div class="footer-cross" aria-hidden="true">✠</div>
+			<p class="footer-title">{SITE_TITLE}</p>
+			<p class="footer-tagline">Reflexiones sobre el tradicionalismo católico y la liturgia</p>
+		</div>
 
+		<div class="footer-top">
 			<div class="footer-col">
 				<p class="footer-col-label">Síguenos</p>
 				<SocialLinks size={18} />
@@ -23,24 +25,33 @@ const year = new Date().getFullYear();
 				<ul class="podcast-list">
 					{PODCAST_LINKS.map(({ label, href }) => (
 						<li>
-							<a href={href} target="_blank" rel="noopener noreferrer">{label}</a>
+							<a href={href} target="_blank" rel="noopener noreferrer" class="podcast-link">
+								<span class="podcast-link-dot" aria-hidden="true"></span>
+								{label}
+							</a>
 						</li>
 					))}
+				</ul>
+			</div>
+
+			<div class="footer-col">
+				<p class="footer-col-label">Navegar</p>
+				<ul class="nav-list">
+					<li><a href="/" class="podcast-link"><span class="podcast-link-dot" aria-hidden="true"></span>Inicio</a></li>
+					<li><a href="/faq/" class="podcast-link"><span class="podcast-link-dot" aria-hidden="true"></span>FAQ</a></li>
+					<li><a href="/contacto-roma/" class="podcast-link"><span class="podcast-link-dot" aria-hidden="true"></span>Contacta a Roma</a></li>
+					<li><a href="/rss.xml" class="podcast-link"><span class="podcast-link-dot" aria-hidden="true"></span>RSS</a></li>
 				</ul>
 			</div>
 		</div>
 
 		<div class="footer-bottom">
-			<nav class="footer-nav" aria-label="Pie de página">
-				<a href="/">Inicio</a>
-				<span aria-hidden="true">·</span>
-				<a href="/faq/">FAQ</a>
-				<span aria-hidden="true">·</span>
-				<a href="/contacto-roma/">Contacta a Roma</a>
-				<span aria-hidden="true">·</span>
-				<a href="/rss.xml">RSS</a>
-			</nav>
-			<p class="footer-copy">&copy; {year} {SITE_TITLE}</p>
+			<div class="footer-bottom-ornament" aria-hidden="true">
+				<span class="footer-ornament-line"></span>
+				<span class="footer-ornament-cross">✦</span>
+				<span class="footer-ornament-line"></span>
+			</div>
+			<p class="footer-copy">&copy; {year} {SITE_TITLE} · Todos los derechos reservados</p>
 		</div>
 	</div>
 </footer>
@@ -49,8 +60,21 @@ const year = new Date().getFullYear();
 	footer {
 		background: var(--bg-surface);
 		border-top: 1px solid var(--border);
-		padding: 3rem 2rem 2rem;
+		padding: 0 2rem 2rem;
 		margin-top: 0;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.footer-glow {
+		position: absolute;
+		top: 0;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 60%;
+		height: 1px;
+		background: linear-gradient(90deg, transparent, var(--gold), transparent);
+		opacity: 0.5;
 	}
 
 	.footer-inner {
@@ -58,35 +82,47 @@ const year = new Date().getFullYear();
 		margin: 0 auto;
 	}
 
-	.footer-top {
-		display: grid;
-		grid-template-columns: 1fr auto auto;
-		gap: 3rem;
-		padding-bottom: 2.5rem;
+	/* ── Brand banner ─────────────────────── */
+
+	.footer-brand-banner {
+		text-align: center;
+		padding: 3rem 0 2.5rem;
 		border-bottom: 1px solid var(--border);
-		align-items: start;
 	}
 
-	.footer-brand {
-		display: flex;
-		flex-direction: column;
-		gap: 0.3rem;
+	.footer-cross {
+		font-size: 1.5rem;
+		color: var(--gold);
+		opacity: 0.4;
+		margin-bottom: 0.75rem;
+		display: block;
 	}
 
 	.footer-title {
 		font-family: var(--font-display);
-		font-size: 1.1rem;
+		font-size: 1.3rem;
 		font-weight: 700;
 		color: var(--text);
-		margin: 0;
+		margin: 0 0 0.4rem;
 	}
 
 	.footer-tagline {
 		font-family: var(--font-body);
-		font-size: 0.85rem;
+		font-size: 0.9rem;
 		font-style: italic;
 		color: var(--text-muted);
 		margin: 0;
+	}
+
+	/* ── Top cols ─────────────────────────── */
+
+	.footer-top {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		gap: 3rem;
+		padding: 2.5rem 0;
+		border-bottom: 1px solid var(--border);
+		align-items: start;
 	}
 
 	.footer-col-label {
@@ -95,78 +131,99 @@ const year = new Date().getFullYear();
 		font-weight: 700;
 		letter-spacing: 0.15em;
 		text-transform: uppercase;
-		color: var(--text-faint);
-		margin: 0 0 0.85rem;
+		color: var(--gold);
+		margin: 0 0 1rem;
 	}
 
-	.podcast-list {
+	.podcast-list,
+	.nav-list {
 		list-style: none;
 		margin: 0;
 		padding: 0;
 		display: flex;
 		flex-direction: column;
-		gap: 0.35rem;
+		gap: 0.4rem;
 	}
 
-	.podcast-list a {
+	.podcast-link {
 		font-family: var(--font-ui);
 		font-size: 0.82rem;
 		color: var(--text-muted);
-	}
-
-	.podcast-list a:hover {
-		color: var(--red);
+		display: flex;
+		align-items: center;
+		gap: 0.5em;
+		transition: color 0.2s, gap 0.2s;
 		text-decoration: none;
 	}
+
+	.podcast-link-dot {
+		width: 4px;
+		height: 4px;
+		border-radius: 50%;
+		background: var(--border);
+		flex-shrink: 0;
+		transition: background 0.2s, transform 0.2s;
+	}
+
+	.podcast-link:hover {
+		color: var(--red);
+		gap: 0.7em;
+		text-decoration: none;
+	}
+
+	.podcast-link:hover .podcast-link-dot {
+		background: var(--red);
+		transform: scale(1.4);
+	}
+
+	/* ── Bottom ───────────────────────────── */
 
 	.footer-bottom {
 		padding-top: 1.5rem;
 		display: flex;
+		flex-direction: column;
 		align-items: center;
-		justify-content: space-between;
-		flex-wrap: wrap;
 		gap: 0.75rem;
 	}
 
-	.footer-nav {
+	.footer-bottom-ornament {
 		display: flex;
 		align-items: center;
 		gap: 0.75rem;
+		width: 100%;
+		max-width: 300px;
 	}
 
-	.footer-nav a {
-		font-family: var(--font-ui);
-		font-size: 0.72rem;
-		font-weight: 700;
-		letter-spacing: 0.06em;
-		text-transform: uppercase;
-		color: var(--text-muted);
+	.footer-ornament-line {
+		flex: 1;
+		height: 1px;
+		background: linear-gradient(to right, transparent, var(--border));
 	}
 
-	.footer-nav a:hover {
-		color: var(--red);
-		text-decoration: none;
+	.footer-ornament-line:last-child {
+		background: linear-gradient(to left, transparent, var(--border));
 	}
 
-	.footer-nav span {
-		color: var(--text-faint);
-		font-size: 0.6rem;
+	.footer-ornament-cross {
+		font-size: 0.5rem;
+		color: var(--gold);
+		opacity: 0.5;
 	}
 
 	.footer-copy {
 		font-family: var(--font-ui);
-		font-size: 0.72rem;
+		font-size: 0.7rem;
 		color: var(--text-faint);
 		margin: 0;
+		text-align: center;
 	}
+
+	/* ── Responsive ─────────────────────── */
 
 	@media (max-width: 820px) {
 		.footer-top {
 			grid-template-columns: 1fr 1fr;
 			gap: 2rem;
-		}
-		.footer-brand {
-			grid-column: 1 / -1;
 		}
 	}
 
@@ -175,7 +232,7 @@ const year = new Date().getFullYear();
 			grid-template-columns: 1fr;
 		}
 		footer {
-			padding: 2.5rem 1.25rem 1.5rem;
+			padding: 0 1.25rem 1.5rem;
 		}
 	}
 </style>

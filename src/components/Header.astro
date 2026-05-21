@@ -3,10 +3,14 @@ import { SITE_TITLE } from '../consts';
 import SocialLinks from './SocialLinks.astro';
 ---
 
-<header>
+<header id="site-header">
 	<div class="header-band">
 		<div class="header-band-inner">
-			<span class="header-tagline">Tradición · Liturgia · Fe</span>
+			<span class="header-tagline">
+				<span class="header-tagline-ornament" aria-hidden="true">✦</span>
+				Tradición · Liturgia · Fe
+				<span class="header-tagline-ornament" aria-hidden="true">✦</span>
+			</span>
 			<a href="/rss.xml" class="header-rss">RSS</a>
 		</div>
 	</div>
@@ -14,7 +18,9 @@ import SocialLinks from './SocialLinks.astro';
 		<div class="header-main-inner">
 			<div aria-hidden="true"></div>
 			<a href="/" class="masthead" aria-label="Inicio">
-				<span class="masthead-title">{SITE_TITLE}</span>
+				<span class="masthead-ornament" aria-hidden="true">✠</span>
+				<span class="masthead-title" transition:name="site-masthead">{SITE_TITLE}</span>
+				<span class="masthead-ornament" aria-hidden="true">✠</span>
 			</a>
 			<div class="header-social">
 				<SocialLinks size={17} />
@@ -28,8 +34,21 @@ import SocialLinks from './SocialLinks.astro';
 		position: sticky;
 		top: 0;
 		z-index: 100;
-		border-top: 3px solid var(--red);
 		border-bottom: 1px solid var(--border);
+		transition: box-shadow 0.3s ease;
+	}
+
+	header::before {
+		content: '';
+		display: block;
+		height: 3px;
+		background: linear-gradient(90deg, var(--red-dark), var(--red), var(--gold), var(--red), var(--red-dark));
+		background-size: 200% 100%;
+		animation: gradientShift 6s ease infinite;
+	}
+
+	header.is-scrolled {
+		box-shadow: 0 2px 20px color-mix(in srgb, var(--text) 12%, transparent);
 	}
 
 	/* ── Banda superior ─────────────────────── */
@@ -56,6 +75,17 @@ import SocialLinks from './SocialLinks.astro';
 		letter-spacing: 0.2em;
 		text-transform: uppercase;
 		color: var(--text-faint);
+		display: flex;
+		align-items: center;
+		gap: 0.6em;
+	}
+
+	.header-tagline-ornament {
+		color: var(--gold);
+		font-size: 0.5rem;
+		opacity: 0.7;
+		animation: spinSlow 20s linear infinite;
+		display: inline-block;
 	}
 
 	.header-rss {
@@ -66,11 +96,16 @@ import SocialLinks from './SocialLinks.astro';
 		text-transform: uppercase;
 		color: var(--text-faint);
 		text-decoration: none;
-		transition: color 0.15s;
+		transition: color 0.2s;
+		padding: 0.2em 0.5em;
+		border: 1px solid transparent;
+		border-radius: 2px;
+		transition: color 0.2s, border-color 0.2s;
 	}
 
 	.header-rss:hover {
 		color: var(--red);
+		border-color: color-mix(in srgb, var(--red) 30%, transparent);
 		text-decoration: none;
 	}
 
@@ -92,21 +127,25 @@ import SocialLinks from './SocialLinks.astro';
 
 	.masthead {
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
 		align-items: center;
-		gap: 8px;
+		gap: 0.7em;
 		text-decoration: none;
 		justify-self: center;
+		position: relative;
 	}
 
-	.masthead::before,
-	.masthead::after {
-		content: '';
-		display: block;
-		width: 28px;
-		height: 1px;
-		background: var(--red);
-		opacity: 0.55;
+	.masthead-ornament {
+		font-size: 0.8rem;
+		color: var(--gold);
+		opacity: 0.6;
+		transition: opacity 0.3s, transform 0.3s;
+		line-height: 1;
+	}
+
+	.masthead:hover .masthead-ornament {
+		opacity: 1;
+		transform: scale(1.2);
 	}
 
 	.masthead-title {
@@ -117,11 +156,28 @@ import SocialLinks from './SocialLinks.astro';
 		letter-spacing: -0.015em;
 		white-space: nowrap;
 		line-height: 1;
-		transition: color 0.15s;
+		transition: color 0.2s;
+		position: relative;
+	}
+
+	.masthead-title::after {
+		content: '';
+		position: absolute;
+		bottom: -3px;
+		left: 0;
+		right: 0;
+		height: 1px;
+		background: linear-gradient(90deg, transparent, var(--red), transparent);
+		transform: scaleX(0);
+		transition: transform 0.4s var(--ease-out-expo);
 	}
 
 	.masthead:hover .masthead-title {
 		color: var(--red);
+	}
+
+	.masthead:hover .masthead-title::after {
+		transform: scaleX(1);
 	}
 
 	.header-social {
@@ -140,16 +196,26 @@ import SocialLinks from './SocialLinks.astro';
 			padding: 0 1.25rem;
 		}
 
-		.masthead {
-			flex-direction: row;
-			gap: 0;
-		}
+		.masthead { justify-self: start; }
 
-		.masthead::before,
-		.masthead::after { display: none; }
-
+		.masthead-ornament { display: none; }
 		.masthead-title { font-size: 1.1rem; }
 
 		.header-social { display: none; }
 	}
 </style>
+
+<script>
+	const header = document.getElementById('site-header');
+
+	const updateHeader = () => {
+		if (window.scrollY > 20) {
+			header?.classList.add('is-scrolled');
+		} else {
+			header?.classList.remove('is-scrolled');
+		}
+	};
+
+	window.addEventListener('scroll', updateHeader, { passive: true });
+	updateHeader();
+</script>

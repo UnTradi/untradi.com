@@ -1,4 +1,5 @@
 ---
+import ClientRouter from 'astro/components/ClientRouter.astro';
 import '../styles/global.css';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
@@ -71,3 +72,4 @@ const websiteJsonLd = {
 <meta property="twitter:image" content={ogImage} />
 
 <script type="application/ld+json" set:html={JSON.stringify(websiteJsonLd)} />
+<ClientRouter />
