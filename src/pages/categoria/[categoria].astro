@@ -22,6 +22,22 @@ export async function getStaticPaths() {
 const { categoria } = Astro.params;
 const { posts } = Astro.props;
 const categoryLabel = CATEGORIES[categoria!] ?? categoria;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
+
+const collectionJsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'CollectionPage',
+	name: `${categoryLabel} — ${SITE_TITLE}`,
+	description: `Artículos sobre ${categoryLabel} en el blog Un Tradi en el Novus Ordo.`,
+	url: canonicalURL,
+	inLanguage: 'es-MX',
+	hasPart: posts.map((post) => ({
+		'@type': 'BlogPosting',
+		headline: post.data.title,
+		url: new URL(`/blog/${post.id}/`, Astro.site).href,
+		datePublished: post.data.pubDate.toISOString(),
+	})),
+};
 ---
 
 <!doctype html>
@@ -31,6 +47,7 @@ const categoryLabel = CATEGORIES[categoria!] ?? categoria;
 			title={`${categoryLabel} — ${SITE_TITLE}`}
 			description={`Artículos sobre ${categoryLabel} en el blog Un Tradi en el Novus Ordo.`}
 		/>
+		<script type="application/ld+json" set:html={JSON.stringify(collectionJsonLd)} />
 		<style>
 			.page-header {
 				background: var(--bg-surface);

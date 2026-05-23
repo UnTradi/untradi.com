@@ -8,7 +8,7 @@ import { SITE_TITLE } from '../consts';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate } = Astro.props;
+const { title, description, pubDate, updatedDate, category } = Astro.props;
 
 const url = Astro.url.pathname;
 const slug = url.replace(/^\/blog\//, '').replace(/\/$/, '');
@@ -17,13 +17,20 @@ const ogImage = new URL(`/og/${slug}.png`, Astro.site).href;
 
 const articleJsonLd = {
 	'@context': 'https://schema.org',
-	'@type': 'Article',
+	'@type': 'BlogPosting',
 	headline: title,
 	description,
+	inLanguage: 'es-MX',
 	datePublished: pubDate.toISOString(),
 	dateModified: (updatedDate ?? pubDate).toISOString(),
 	url: canonicalURL,
-	image: ogImage,
+	image: {
+		'@type': 'ImageObject',
+		url: ogImage,
+		width: 1200,
+		height: 630,
+	},
+	...(category ? { articleSection: category } : {}),
 	author: {
 		'@type': 'Person',
 		name: 'Un Tradi en el Novus Ordo',
@@ -33,7 +40,23 @@ const articleJsonLd = {
 		'@type': 'Organization',
 		name: SITE_TITLE,
 		url: 'https://untradi.com',
+		logo: {
+			'@type': 'ImageObject',
+			url: new URL('/og/default.png', Astro.site).href,
+			width: 1200,
+			height: 630,
+		},
 	},
+};
+
+const breadcrumbJsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'BreadcrumbList',
+	itemListElement: [
+		{ '@type': 'ListItem', position: 1, name: 'Inicio', item: Astro.site?.href },
+		{ '@type': 'ListItem', position: 2, name: 'Blog', item: new URL('/blog/', Astro.site).href },
+		{ '@type': 'ListItem', position: 3, name: title, item: canonicalURL },
+	],
 };
 ---
 
@@ -45,8 +68,10 @@ const articleJsonLd = {
 			image={`/og/${slug}.png`}
 			ogType="article"
 			pubDate={pubDate}
+			updatedDate={updatedDate}
 		/>
 		<script type="application/ld+json" set:html={JSON.stringify(articleJsonLd)} />
+		<script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
 		<style>
 			/* ── Reading progress ─────────────────────── */
 

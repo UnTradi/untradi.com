@@ -14,7 +14,10 @@ const posts = (await getCollection('blog')).sort(
 <!doctype html>
 <html lang="es">
 	<head>
-		<BaseHead title={`Todos los artículos — ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+		<BaseHead
+			title={`Todos los artículos — ${SITE_TITLE}`}
+			description={`Archivo completo de artículos sobre liturgia, Misa Tradicional, fe y apologética católica en el blog Un Tradi en el Novus Ordo.`}
+		/>
 		<style>
 			.page-header {
 				border-bottom: 1px solid var(--border);
