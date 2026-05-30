@@ -39,10 +39,13 @@ const fonts = [
 ];
 
 export const GET: APIRoute = async () => {
-	const bg = '#2C2E32';
-	const textMuted = '#9A9AA4';
-	const border = '#3C3C42';
-	const red = '#D44035';
+	// Site palette
+	const bg     = '#F5EDE0';
+	const ink    = '#1C1008';
+	const faint  = '#9A7E64';
+	const red    = '#991A11';
+	const gold   = '#B88528';
+	const border = '#C8B498';
 
 	const svg = await satori(
 		h(
@@ -56,11 +59,11 @@ export const GET: APIRoute = async () => {
 					flexDirection: 'column',
 				},
 			},
-			// Red top stripe
+			// Gold top stripe
 			h('div', {
-				style: { width: '1200px', height: '8px', backgroundColor: red },
+				style: { width: '1200px', height: '5px', backgroundColor: gold },
 			}),
-			// Centered content area
+			// Centered content
 			h(
 				'div',
 				{
@@ -73,13 +76,13 @@ export const GET: APIRoute = async () => {
 						padding: '0 80px',
 					},
 				},
-				// Top horizontal rule (red)
+				// Gold top ornament bar
 				h('div', {
 					style: {
-						width: '80px',
+						width: '64px',
 						height: '2px',
-						backgroundColor: red,
-						marginBottom: '40px',
+						backgroundColor: gold,
+						marginBottom: '48px',
 					},
 				}),
 				// Site title
@@ -90,37 +93,37 @@ export const GET: APIRoute = async () => {
 							fontFamily: '"Playfair Display"',
 							fontSize: 58,
 							fontWeight: 700,
-							color: '#E8E4DC',
+							color: ink,
 							letterSpacing: '-0.02em',
 							textAlign: 'center',
 							lineHeight: 1.2,
-							marginBottom: '40px',
+							marginBottom: '36px',
 						},
 					},
 					SITE_TITLE
 				),
-				// Bottom horizontal rule (red)
+				// Gold bottom ornament bar
 				h('div', {
 					style: {
-						width: '80px',
+						width: '64px',
 						height: '2px',
-						backgroundColor: red,
+						backgroundColor: gold,
 						marginBottom: '28px',
 					},
 				}),
-				// Domain
+				// Tagline
 				h(
 					'div',
 					{
 						style: {
 							fontFamily: '"Lato"',
 							fontSize: 13,
-							color: textMuted,
+							color: faint,
 							letterSpacing: '0.22em',
 							textTransform: 'uppercase',
 						},
 					},
-					'untradi.com'
+					'Tradición · Liturgia · Fe'
 				)
 			),
 			// Bottom bar
@@ -130,26 +133,33 @@ export const GET: APIRoute = async () => {
 					style: {
 						display: 'flex',
 						alignItems: 'center',
-						justifyContent: 'flex-end',
+						justifyContent: 'space-between',
 						padding: '0 80px',
-						height: '56px',
+						height: '52px',
 						borderTop: `1px solid ${border}`,
 					},
 				},
+				h('div', {
+					style: { width: '28px', height: '3px', backgroundColor: red },
+				}),
 				h(
 					'div',
 					{
 						style: {
 							fontFamily: '"Lato"',
 							fontSize: 12,
-							color: textMuted,
-							letterSpacing: '0.1em',
+							color: faint,
+							letterSpacing: '0.12em',
 							textTransform: 'uppercase',
 						},
 					},
-					'Tradición · Liturgia · Fe'
+					'untradi.com'
 				)
-			)
+			),
+			// Carmesí bottom stripe
+			h('div', {
+				style: { width: '1200px', height: '4px', backgroundColor: red },
+			})
 		),
 		{
 			width: 1200,

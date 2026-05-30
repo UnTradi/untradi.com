@@ -69,10 +69,15 @@ export const GET: APIRoute = async ({ props }) => {
 	const displayTitle = title.length > 65 ? title.slice(0, 62) + '…' : title;
 	const titleSize = title.length > 48 ? 52 : title.length > 34 ? 62 : 72;
 
-	const bg = '#2C2E32';
-	const textMuted = '#9A9AA4';
-	const border = '#3C3C42';
-	const red = '#D44035';
+	// Site palette
+	const bg        = '#F5EDE0';
+	const bgSurface = '#EADECB';
+	const ink       = '#1C1008';
+	const muted     = '#5C4838';
+	const faint     = '#9A7E64';
+	const red       = '#991A11';
+	const gold      = '#B88528';
+	const border    = '#C8B498';
 
 	const svg = await satori(
 		h(
@@ -86,9 +91,9 @@ export const GET: APIRoute = async ({ props }) => {
 					flexDirection: 'column',
 				},
 			},
-			// Red top stripe
+			// Gold top stripe
 			h('div', {
-				style: { width: '1200px', height: '8px', backgroundColor: red },
+				style: { width: '1200px', height: '5px', backgroundColor: gold },
 			}),
 			// Main content
 			h(
@@ -98,7 +103,7 @@ export const GET: APIRoute = async ({ props }) => {
 						display: 'flex',
 						flexDirection: 'column',
 						flex: 1,
-						padding: '52px 80px 48px',
+						padding: '48px 80px 44px',
 					},
 				},
 				// Top row: site name | date
@@ -109,7 +114,7 @@ export const GET: APIRoute = async ({ props }) => {
 							display: 'flex',
 							justifyContent: 'space-between',
 							alignItems: 'center',
-							marginBottom: '28px',
+							marginBottom: '24px',
 						},
 					},
 					h(
@@ -117,8 +122,8 @@ export const GET: APIRoute = async ({ props }) => {
 						{
 							style: {
 								fontFamily: '"Lato"',
-								fontSize: 12,
-								color: textMuted,
+								fontSize: 11,
+								color: faint,
 								letterSpacing: '0.22em',
 								textTransform: 'uppercase',
 							},
@@ -130,8 +135,8 @@ export const GET: APIRoute = async ({ props }) => {
 						{
 							style: {
 								fontFamily: '"Lato"',
-								fontSize: 12,
-								color: textMuted,
+								fontSize: 11,
+								color: faint,
 								letterSpacing: '0.1em',
 								textTransform: 'uppercase',
 							},
@@ -139,9 +144,9 @@ export const GET: APIRoute = async ({ props }) => {
 						dateStr
 					)
 				),
-				// Horizontal rule
+				// Gold horizontal rule
 				h('div', {
-					style: { width: '1040px', height: '1px', backgroundColor: border, marginBottom: '44px' },
+					style: { width: '1040px', height: '1px', backgroundColor: gold, marginBottom: '40px', opacity: 0.5 },
 				}),
 				// Title
 				h(
@@ -151,10 +156,10 @@ export const GET: APIRoute = async ({ props }) => {
 							fontFamily: '"Playfair Display"',
 							fontSize: titleSize,
 							fontWeight: 700,
-							color: '#E8E4DC',
+							color: ink,
 							lineHeight: 1.15,
 							letterSpacing: '-0.02em',
-							marginBottom: description ? '22px' : '0',
+							marginBottom: description ? '20px' : '0',
 						},
 					},
 					displayTitle
@@ -167,11 +172,11 @@ export const GET: APIRoute = async ({ props }) => {
 								style: {
 									fontFamily: '"Lato"',
 									fontSize: 19,
-									color: textMuted,
+									color: muted,
 									lineHeight: 1.55,
 								},
 							},
-							description.length > 115 ? description.slice(0, 112) + '…' : description
+							description
 						)
 					: null,
 				// Spacer
@@ -188,7 +193,6 @@ export const GET: APIRoute = async ({ props }) => {
 							borderTop: `1px solid ${border}`,
 						},
 					},
-					// Left red accent bar
 					h('div', {
 						style: { width: '32px', height: '3px', backgroundColor: red },
 					}),
@@ -198,14 +202,18 @@ export const GET: APIRoute = async ({ props }) => {
 							style: {
 								fontFamily: '"Lato"',
 								fontSize: 13,
-								color: textMuted,
+								color: faint,
 								letterSpacing: '0.12em',
 							},
 						},
 						'untradi.com'
 					)
 				)
-			)
+			),
+			// Carmesí bottom stripe
+			h('div', {
+				style: { width: '1200px', height: '4px', backgroundColor: red },
+			})
 		),
 		{
 			width: 1200,
