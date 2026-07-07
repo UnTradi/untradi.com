@@ -6,9 +6,9 @@ import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { SITE_TITLE } from '../consts';
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = CollectionEntry<'blog'>['data'] & { readingMins: number };
 
-const { title, description, pubDate, updatedDate, category } = Astro.props;
+const { title, description, pubDate, updatedDate, category, readingMins } = Astro.props;
 
 const url = Astro.url.pathname;
 const slug = url.replace(/^\/blog\//, '').replace(/\/$/, '');
@@ -40,6 +40,7 @@ const articleJsonLd = {
 		'@type': 'Organization',
 		name: SITE_TITLE,
 		url: 'https://untradi.com',
+		foundingDate: '2017-11-25',
 		logo: {
 			'@type': 'ImageObject',
 			url: new URL('/og/default.png', Astro.site).href,
@@ -81,20 +82,17 @@ const breadcrumbJsonLd = {
 				left: 0;
 				width: 100%;
 				height: 3px;
-				background: linear-gradient(90deg, var(--red), var(--gold), var(--red-light));
-				background-size: 200% 100%;
-				animation: gradientShift 4s ease infinite;
+				background: var(--red);
 				transform-origin: left center;
 				transform: scaleX(0);
 				z-index: 200;
-				box-shadow: 0 0 10px color-mix(in srgb, var(--red) 50%, transparent);
 			}
 
 			@supports (animation-timeline: scroll()) {
 				.reading-progress {
-					animation: reading-progress linear, gradientShift 4s ease infinite;
-					animation-timeline: scroll(), auto;
-					animation-range: 0 100%, auto;
+					animation: reading-progress linear;
+					animation-timeline: scroll();
+					animation-range: 0 100%;
 				}
 				@keyframes reading-progress {
 					from { transform: scaleX(0); }
@@ -112,8 +110,8 @@ const breadcrumbJsonLd = {
 
 			.article-layout {
 				display: grid;
-				grid-template-columns: 1fr 260px;
-				gap: 4rem;
+				grid-template-columns: 1fr 230px;
+				gap: 5.5rem;
 				align-items: start;
 			}
 
@@ -123,7 +121,7 @@ const breadcrumbJsonLd = {
 				max-width: var(--max-prose);
 				margin: 4.5rem auto 3.5rem;
 				text-align: center;
-				animation: fadeInUp 0.8s var(--ease-out-expo) both;
+				animation: fadeInUp 0.5s var(--ease-out-expo) both;
 			}
 
 			.article-eyebrow {
@@ -144,7 +142,7 @@ const breadcrumbJsonLd = {
 
 			.article-title {
 				font-family: var(--font-display);
-				font-size: clamp(2rem, 5vw, 3.2rem);
+				font-size: clamp(2.2rem, 5vw, 3.5rem);
 				font-weight: 700;
 				color: var(--text);
 				line-height: 1.15;
@@ -230,29 +228,29 @@ const breadcrumbJsonLd = {
 			.prose {
 				max-width: var(--max-prose);
 				margin: 0 auto;
-				padding-bottom: 5rem;
-				animation: fadeInUp 1s 0.2s var(--ease-out-expo) both;
+				padding-bottom: 2rem;
+				animation: fadeInUp 0.5s 0.1s var(--ease-out-expo) both;
 			}
 
 			.prose a {
-				color: var(--red);
+				color: var(--blue);
 				text-decoration: underline;
 				text-decoration-thickness: 1px;
 				text-underline-offset: 3px;
-				text-decoration-color: color-mix(in srgb, var(--red) 40%, transparent);
+				text-decoration-color: color-mix(in srgb, var(--blue) 40%, transparent);
 				transition: color 0.15s, text-decoration-color 0.15s;
 			}
 
 			.prose a:hover {
-				color: var(--red-light);
-				text-decoration-color: var(--red-light);
+				color: var(--blue-light);
+				text-decoration-color: var(--blue-light);
 			}
 
 			/* ── Table of contents ────────────────────── */
 
 			.toc-aside {
 				position: sticky;
-				top: calc(80px + 28px + 2rem);
+				top: calc(104px + 28px + 2rem);
 				padding-top: 4.5rem;
 				max-height: calc(100vh - 160px);
 				overflow-y: auto;
@@ -262,9 +260,6 @@ const breadcrumbJsonLd = {
 			.toc-aside::-webkit-scrollbar { display: none; }
 
 			.toc-box {
-				border: 1px solid var(--border);
-				padding: 1.5rem;
-				background: var(--bg-surface);
 				animation: fadeIn 0.8s 0.4s both;
 			}
 
@@ -274,18 +269,9 @@ const breadcrumbJsonLd = {
 				font-weight: 700;
 				letter-spacing: 0.2em;
 				text-transform: uppercase;
-				color: var(--gold);
+				color: var(--green);
 				margin: 0 0 1rem;
-				display: flex;
-				align-items: center;
-				gap: 0.5em;
-			}
-
-			.toc-title::after {
-				content: '';
-				flex: 1;
-				height: 1px;
-				background: var(--border);
+				padding-left: 1em;
 			}
 
 			.toc-list {
@@ -304,23 +290,20 @@ const breadcrumbJsonLd = {
 				line-height: 1.45;
 				color: var(--text-muted);
 				text-decoration: none;
-				padding: 0.3em 0.5em 0.3em 0.75em;
-				border-left: 2px solid transparent;
-				border-radius: 0 2px 2px 0;
-				transition: color 0.2s, border-color 0.2s, background 0.2s, padding-left 0.2s var(--ease-out-expo);
+				padding: 0.3em 0.5em 0.3em 1em;
+				border-left: 2px solid var(--border-light);
+				transition: color 0.2s, border-color 0.2s;
 			}
 
 			.toc-link:hover {
 				color: var(--text);
-				border-left-color: var(--border);
+				border-left-color: var(--text-faint);
 				text-decoration: none;
 			}
 
 			.toc-link.is-active {
 				color: var(--red);
 				border-left-color: var(--red);
-				background: color-mix(in srgb, var(--red) 5%, transparent);
-				padding-left: 1em;
 				font-weight: 700;
 			}
 
@@ -339,7 +322,7 @@ const breadcrumbJsonLd = {
 
 			.article-footer {
 				max-width: var(--max-prose);
-				margin: 0 auto 4rem;
+				margin: 0 auto 1rem;
 				padding-top: 2rem;
 				border-top: 1px solid var(--border);
 				display: flex;
@@ -427,8 +410,6 @@ const breadcrumbJsonLd = {
 				color: var(--red);
 				border-color: color-mix(in srgb, var(--red) 40%, var(--border));
 				background: color-mix(in srgb, var(--red) 5%, var(--bg-surface));
-				box-shadow: 0 4px 16px color-mix(in srgb, var(--red) 15%, transparent);
-				transform: translateY(-3px);
 			}
 
 			/* ── Responsive ───────────────────────────── */
@@ -471,9 +452,9 @@ const breadcrumbJsonLd = {
 							<FormattedDate date={pubDate} />
 						</span>
 						<span class="article-meta-sep" aria-hidden="true">·</span>
-						<span class="reading-time" id="reading-time" aria-label="Tiempo de lectura">
+						<span class="reading-time" aria-label="Tiempo de lectura">
 							<span class="reading-time-icon">☩</span>
-							<span id="reading-time-val">...</span>
+							{readingMins} min de lectura
 						</span>
 					</div>
 					<div class="article-rule" role="presentation">
@@ -514,15 +495,6 @@ const breadcrumbJsonLd = {
 
 		<script>
 			function initArticle() {
-				/* ── Reading time ─────────────────── */
-				const prose = document.getElementById('article-prose');
-				const rtVal = document.getElementById('reading-time-val');
-				if (prose && rtVal) {
-					const words = prose.innerText.trim().split(/\s+/).length;
-					const mins = Math.max(1, Math.round(words / 200));
-					rtVal.textContent = `${mins} min de lectura`;
-				}
-
 				/* ── Table of contents ────────────── */
 				const headings = document.querySelectorAll<HTMLElement>('#article-prose h2, #article-prose h3');
 				const tocList = document.getElementById('toc-list');
@@ -572,22 +544,6 @@ const breadcrumbJsonLd = {
 					window.addEventListener('scroll', toggle, { passive: true });
 					scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 					toggle();
-				}
-
-				/* ── Magnetic effect on back link ─── */
-				const backLink = document.querySelector<HTMLElement>('.back-link');
-				if (backLink) {
-					backLink.addEventListener('mousemove', (e) => {
-						const rect = backLink.getBoundingClientRect();
-						const dx = (e.clientX - rect.left - rect.width / 2) * 0.2;
-						const dy = (e.clientY - rect.top - rect.height / 2) * 0.2;
-						backLink.style.transform = `translate(${dx}px, ${dy}px)`;
-						backLink.style.transition = 'transform 0.1s ease, color 0.2s, gap 0.25s';
-					});
-					backLink.addEventListener('mouseleave', () => {
-						backLink.style.transform = '';
-						backLink.style.transition = 'transform 0.35s var(--ease-out-expo), color 0.2s, gap 0.25s';
-					});
 				}
 
 				/* ── Reveal scroll observer ───────── */

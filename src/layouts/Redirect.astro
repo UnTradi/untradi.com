@@ -32,39 +32,25 @@ const { destination, label, category = 'Enlace externo' } = Astro.props;
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
-			href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Lato:wght@400;700&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&family=Lato:wght@400;700&display=swap"
 			rel="stylesheet"
 		/>
 
 		<style>
 			:root {
-				--bg: #F5EDE0;
-				--bg-surface: #EADECB;
-				--bg-elevated: #DFD0B8;
-				--text: #1C1008;
-				--text-muted: #5C4838;
-				--text-faint: #9A7E64;
-				--red: #991A11;
-				--gold: #B88528;
-				--gold-pale: #EEE1BE;
-				--border: #C8B498;
-				--font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+				color-scheme: light;
+				--bg: #FBF6EB;
+				--bg-surface: #F4ECDB;
+				--bg-elevated: #ECE0C8;
+				--text: #271C10;
+				--text-muted: #5D4A36;
+				--text-faint: #8F7657;
+				--red: #9E2B25;
+				--gold: #B08A2E;
+				--gold-pale: #F2E5C4;
+				--border: #D9C9AB;
+				--font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
 				--font-ui: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-			}
-
-			@media (prefers-color-scheme: dark) {
-				:root {
-					--bg: #100C08;
-					--bg-surface: #1A1410;
-					--bg-elevated: #241A12;
-					--text: #EDE4D2;
-					--text-muted: #A89070;
-					--text-faint: #6A5448;
-					--red: #C83028;
-					--gold: #CC9C2A;
-					--gold-pale: #1E1508;
-					--border: #2C2018;
-				}
 			}
 
 			*, *::before, *::after { box-sizing: border-box; }
@@ -86,8 +72,7 @@ const { destination, label, category = 'Enlace externo' } = Astro.props;
 			/* ── Header mínimo ─────────────────── */
 
 			.site-header {
-				border-top: 4px solid;
-				border-image: linear-gradient(90deg, #741210, #991A11, #B88528, #991A11, #741210) 1;
+				border-top: 3px solid var(--red);
 				border-bottom: 1px solid var(--border);
 				background: var(--bg-surface);
 			}

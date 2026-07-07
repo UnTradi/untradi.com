@@ -1,0 +1,179 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<BaseHead
+			title={`Manifiesto — ${SITE_TITLE}`}
+			description="Qué sostiene este sitio, quién escribe y qué encontrarás aquí: tradición y liturgia en plena comunión con Roma."
+		/>
+		<style>
+			.page-header {
+				background: var(--bg-surface);
+				border-bottom: 1px solid var(--border);
+				padding: 3rem 2rem 2.5rem;
+				text-align: center;
+			}
+
+			.page-title {
+				font-family: var(--font-display);
+				font-size: clamp(1.8rem, 5vw, 2.8rem);
+				font-weight: 700;
+				color: var(--text);
+				margin: 0 0 0.5rem;
+			}
+
+			.page-subtitle {
+				font-family: var(--font-body);
+				font-size: 1rem;
+				font-style: italic;
+				color: var(--text-muted);
+				margin: 0;
+			}
+
+			main {
+				max-width: 720px;
+				margin: 0 auto;
+				padding: 3rem 2rem 5rem;
+			}
+
+			.manifesto h2 {
+				font-family: var(--font-display);
+				font-size: 1.5rem;
+				font-weight: 700;
+				color: var(--text);
+				margin: 2.5rem 0 1rem;
+				line-height: 1.3;
+			}
+
+			.manifesto p {
+				font-family: var(--font-body);
+				color: var(--text-muted);
+				margin: 0 0 1.1rem;
+				line-height: 1.8;
+			}
+
+			.manifesto strong {
+				color: var(--text);
+			}
+
+			.manifesto-rule {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 0.75rem;
+				margin: 2.5rem auto;
+				border: none;
+			}
+
+			.manifesto-rule::before,
+			.manifesto-rule::after {
+				content: '';
+				display: block;
+				width: 60px;
+				height: 1px;
+				background: linear-gradient(to right, transparent, var(--gold));
+			}
+
+			.manifesto-rule::after {
+				background: linear-gradient(to left, transparent, var(--gold));
+			}
+
+			.manifesto-rule-cross {
+				font-size: 1rem;
+				color: var(--gold);
+				opacity: 0.5;
+			}
+
+			@media (max-width: 640px) {
+				main { padding: 2rem 1.25rem 3rem; }
+				.page-header { padding: 2rem 1.25rem; }
+			}
+		</style>
+	</head>
+
+	<body>
+		<Header />
+
+		<div class="page-header">
+			<h1 class="page-title">Manifiesto</h1>
+			<p class="page-subtitle">Qué sostiene este sitio, y por qué</p>
+		</div>
+
+		<main>
+			<article class="manifesto">
+				<p>
+					Fundado el 25 de noviembre de 2017, <strong>Un Tradi en el Novus Ordo</strong> es uno de
+					los principales medios católicos tradicionales del mundo de habla hispana. Su compromiso
+					es doble: reconstruir la cultura católica y restaurar la tradición católica.
+				</p>
+				<p>
+					El nombre de este sitio es, además, una declaración completa: soy un católico de
+					sensibilidad tradicional que asiste al Novus Ordo. No como derrota, ni como etapa
+					provisional mientras "aparece algo mejor", sino como decisión: la comunión plena con
+					Roma no es una variable que se ajusta según el estado de la liturgia. Es el punto fijo
+					desde el cual todo lo demás se juzga.
+				</p>
+
+				<h2>Quién escribe</h2>
+				<p>
+					Un laico mexicano. Escribo bajo seudónimo no por miedo, sino por método: quiero que los
+					argumentos de estas páginas se sostengan por las fuentes que citan —el Código de Derecho
+					Canónico, los documentos del Magisterio, los textos litúrgicos— y no por el nombre de
+					quien los firma. Si algo de lo que aquí se afirma es verdad, lo es con firma o sin ella.
+				</p>
+
+				<h2>Lo que este sitio sostiene</h2>
+				<p>
+					<strong>La obediencia al Papa es el criterio, no un obstáculo.</strong> Amar la Misa
+					Tridentina, el canto gregoriano, la disciplina antigua y la claridad doctrinal de otros
+					siglos es legítimo y bueno. Convertir ese amor en un tribunal que juzga al Romano
+					Pontífice es abandonar, en la práctica, aquello mismo que se dice defender. La Tradición
+					no es un partido dentro de la Iglesia: es la Iglesia misma transmitiéndose, y esa
+					transmisión pasa por Pedro o no es católica.
+				</p>
+				<p>
+					Por eso este sitio dice con claridad lo que otros prefieren dejar en penumbra: consagrar
+					obispos sin mandato pontificio es un error grave, hoy como en 1988. Se puede —se debe—
+					explicar con caridad el drama de quienes llegan ahí, distinguir la culpa de las personas
+					de la gravedad del acto, y reconocer todo lo bueno que existe en esas comunidades. Nada
+					de eso convierte el acto en lícito. La caridad en el tono no es ambigüedad en el juicio.
+				</p>
+				<p>
+					Y el mismo criterio corta hacia el otro lado: quien desprecia la liturgia tradicional, el
+					latín, la reverencia o la piedad de siglos como si fueran patologías a erradicar, tampoco
+					habla desde la Iglesia sino desde otro partido. Este sitio no es equidistante entre la
+					fidelidad y la ruptura; es firme contra toda ruptura, venga del lado que venga.
+				</p>
+
+				<h2>Nuestra voz</h2>
+				<p>
+					El tono de estas páginas quiere ser el de un análisis canónico hecho con espíritu
+					pastoral. Eso significa: citar las fuentes primarias y enlazarlas, distinguir lo que la
+					Iglesia ha definido de lo que es opinión del autor, no atribuir intenciones que no
+					constan, y no escribir jamás desde la indignación, que es el género más rentable y el
+					menos católico de internet. Cuando un tema tiene aristas, se muestran las aristas. Cuando
+					la respuesta es "es complicado", se explica por qué, en lugar de simplificarlo para
+					ganar una discusión.
+				</p>
+
+				<div class="manifesto-rule" role="presentation">
+					<span class="manifesto-rule-cross">✠</span>
+				</div>
+
+				<p>
+					Si algo de lo publicado aquí contiene un error de hecho, de derecho o de doctrina,
+					agradezco la corrección: se verifica y se corrige con nota visible. Ese compromiso
+					también es parte del manifiesto.
+				</p>
+			</article>
+		</main>
+
+		<Footer />
+	</body>
+</html>

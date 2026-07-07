@@ -23,7 +23,7 @@ const totalPosts = allPosts.length;
 			.content-wrap {
 				max-width: var(--max-wide);
 				margin: 0 auto;
-				padding: 0 2rem 5rem;
+				padding: 0 2rem 2.5rem;
 			}
 
 			/* ── Stats strip ─────────────────────────── */
@@ -103,39 +103,13 @@ const totalPosts = allPosts.length;
 				position: relative;
 				overflow: hidden;
 				border: 1px solid var(--border);
-				transform-style: preserve-3d;
-				will-change: transform;
-				transition:
-					border-color 0.35s,
-					box-shadow 0.35s,
-					transform 0.15s ease-out;
+				transition: border-color 0.25s, box-shadow 0.25s;
 			}
 
 			.featured-card:hover {
-				border-color: color-mix(in srgb, var(--red) 40%, var(--border));
-				box-shadow:
-					0 0 0 1px color-mix(in srgb, var(--red) 15%, transparent),
-					0 20px 60px color-mix(in srgb, var(--red) 10%, transparent),
-					0 4px 16px color-mix(in srgb, var(--text) 8%, transparent);
+				border-color: color-mix(in srgb, var(--red) 35%, var(--border));
+				box-shadow: 0 4px 16px color-mix(in srgb, var(--text) 8%, transparent);
 				text-decoration: none;
-			}
-
-			.featured-card-shine {
-				position: absolute;
-				inset: 0;
-				background: radial-gradient(
-					600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-					color-mix(in srgb, var(--gold) 6%, transparent),
-					transparent 40%
-				);
-				pointer-events: none;
-				z-index: 2;
-				opacity: 0;
-				transition: opacity 0.3s;
-			}
-
-			.featured-card:hover .featured-card-shine {
-				opacity: 1;
 			}
 
 			.featured-body {
@@ -170,7 +144,7 @@ const totalPosts = allPosts.length;
 
 			.featured-card-title {
 				font-family: var(--font-display);
-				font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+				font-size: clamp(2rem, 4vw, 2.9rem);
 				font-weight: 700;
 				color: var(--text);
 				margin: 0;
@@ -231,8 +205,7 @@ const totalPosts = allPosts.length;
 			}
 
 			.featured-panel {
-				background: var(--bg-elevated);
-				border-left: 1px solid var(--border);
+				background: var(--red-dark);
 				display: flex;
 				align-items: center;
 				justify-content: center;
@@ -240,48 +213,25 @@ const totalPosts = allPosts.length;
 				overflow: hidden;
 			}
 
-			.featured-panel::before {
-				content: '';
-				position: absolute;
-				inset: 0;
-				background: linear-gradient(135deg,
-					color-mix(in srgb, var(--red) 5%, transparent),
-					transparent 50%,
-					color-mix(in srgb, var(--gold) 5%, transparent)
-				);
-			}
-
 			.featured-panel-glyph {
 				font-family: var(--font-display);
 				font-size: 18rem;
 				font-weight: 900;
 				font-style: italic;
-				color: var(--text);
-				opacity: 0.04;
+				color: var(--gold-pale);
+				opacity: 0.08;
 				line-height: 1;
 				user-select: none;
 				pointer-events: none;
 				position: absolute;
-				transition: opacity 0.4s, transform 0.4s ease;
-			}
-
-			.featured-card:hover .featured-panel-glyph {
-				opacity: 0.08;
-				transform: scale(1.06);
 			}
 
 			.featured-panel-cross {
 				font-size: 2.5rem;
-				color: var(--gold);
-				opacity: 0.2;
+				color: var(--gold-light);
+				opacity: 0.85;
 				position: relative;
 				z-index: 1;
-				transition: opacity 0.4s, transform 0.5s var(--ease-out-expo);
-			}
-
-			.featured-card:hover .featured-panel-cross {
-				opacity: 0.5;
-				transform: scale(1.1) rotate(8deg);
 			}
 
 			/* ── Section divider ──────────────────────── */
@@ -311,7 +261,7 @@ const totalPosts = allPosts.length;
 				font-weight: 700;
 				letter-spacing: 0.2em;
 				text-transform: uppercase;
-				color: var(--text-faint);
+				color: var(--green);
 				white-space: nowrap;
 			}
 
@@ -337,10 +287,7 @@ const totalPosts = allPosts.length;
 				text-decoration: none;
 				align-items: center;
 				position: relative;
-				transition:
-					background 0.25s,
-					padding-left 0.3s var(--ease-out-expo),
-					transform 0.2s var(--ease-out-expo);
+				transition: background 0.25s;
 			}
 
 			.post-row-indicator {
@@ -348,22 +295,19 @@ const totalPosts = allPosts.length;
 				left: 0;
 				top: 15%;
 				bottom: 15%;
-				width: 3px;
-				background: linear-gradient(to bottom, var(--red), var(--gold));
-				border-radius: 0 2px 2px 0;
-				transform: scaleY(0);
-				transform-origin: center;
-				transition: transform 0.35s var(--ease-out-expo);
+				width: 2px;
+				background: var(--red);
+				opacity: 0;
+				transition: opacity 0.25s;
 			}
 
 			.post-row:hover {
 				text-decoration: none;
 				background: color-mix(in srgb, var(--bg-surface) 60%, transparent);
-				padding-left: 1.5rem;
 			}
 
 			.post-row:hover .post-row-indicator {
-				transform: scaleY(1);
+				opacity: 1;
 			}
 
 			.post-row:first-child {
@@ -388,7 +332,7 @@ const totalPosts = allPosts.length;
 
 			.post-row-title {
 				font-family: var(--font-display);
-				font-size: 1.2rem;
+				font-size: 1.35rem;
 				font-weight: 700;
 				color: var(--text);
 				margin: 0 0 0.3rem;
@@ -454,7 +398,7 @@ const totalPosts = allPosts.length;
 
 			<div class="stats-strip" aria-label="Estadísticas del sitio">
 				<div class="stat-item">
-					<span class="stat-number" data-count-to={totalPosts}>0</span>
+					<span class="stat-number">{totalPosts}</span>
 					<span class="stat-label">artículos</span>
 				</div>
 				<span class="stats-divider" aria-hidden="true"></span>
@@ -466,8 +410,7 @@ const totalPosts = allPosts.length;
 			{featuredPost && (
 				<div class="featured-wrap reveal">
 					<p class="featured-label" aria-hidden="true">Artículo destacado</p>
-					<a href={`/blog/${featuredPost.id}/`} class="featured-card" id="featured-card">
-						<div class="featured-card-shine" aria-hidden="true"></div>
+					<a href={`/blog/${featuredPost.id}/`} class="featured-card">
 						<div class="featured-body">
 							<p class="featured-eyebrow">Artículo destacado</p>
 							<h2 class="featured-card-title">{featuredPost.data.title}</h2>
@@ -536,95 +479,6 @@ const totalPosts = allPosts.length;
 				document.querySelectorAll('.reveal, .reveal-left').forEach((el) => {
 					el.classList.remove('is-visible');
 					revealObserver.observe(el);
-				});
-
-				/* ── Animated counter ─────────────── */
-				const countEls = document.querySelectorAll<HTMLElement>('[data-count-to]');
-				const counterObserver = new IntersectionObserver((entries) => {
-					entries.forEach((e) => {
-						if (!e.isIntersecting) return;
-						const el = e.target as HTMLElement;
-						const target = parseInt(el.dataset.countTo ?? '0', 10);
-						const duration = 900;
-						const start = performance.now();
-						const tick = (now: number) => {
-							const progress = Math.min((now - start) / duration, 1);
-							const eased = 1 - Math.pow(1 - progress, 3);
-							el.textContent = String(Math.round(eased * target));
-							if (progress < 1) requestAnimationFrame(tick);
-						};
-						requestAnimationFrame(tick);
-						counterObserver.unobserve(el);
-					});
-				}, { threshold: 0.5 });
-				countEls.forEach((el) => {
-					el.textContent = '0';
-					counterObserver.observe(el);
-				});
-
-				/* ── Featured card 3D tilt ────────── */
-				const card = document.getElementById('featured-card') as HTMLAnchorElement | null;
-				const shine = card?.querySelector<HTMLElement>('.featured-card-shine');
-
-				if (card) {
-					let raf = 0;
-					let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
-
-					card.addEventListener('mousemove', (e) => {
-						const rect = card.getBoundingClientRect();
-						const x = (e.clientX - rect.left) / rect.width;
-						const y = (e.clientY - rect.top) / rect.height;
-						targetX = (x - 0.5) * 7;
-						targetY = -(y - 0.5) * 7;
-
-						if (shine) {
-							shine.style.setProperty('--mouse-x', `${x * 100}%`);
-							shine.style.setProperty('--mouse-y', `${y * 100}%`);
-						}
-
-						cancelAnimationFrame(raf);
-						const animate = () => {
-							currentX += (targetX - currentX) * 0.12;
-							currentY += (targetY - currentY) * 0.12;
-							card.style.transform = `perspective(1200px) rotateY(${currentX}deg) rotateX(${currentY}deg)`;
-							if (Math.abs(targetX - currentX) > 0.05 || Math.abs(targetY - currentY) > 0.05) {
-								raf = requestAnimationFrame(animate);
-							}
-						};
-						raf = requestAnimationFrame(animate);
-					});
-
-					card.addEventListener('mouseleave', () => {
-						cancelAnimationFrame(raf);
-						const reset = () => {
-							currentX += (0 - currentX) * 0.1;
-							currentY += (0 - currentY) * 0.1;
-							card.style.transform = `perspective(1200px) rotateY(${currentX}deg) rotateX(${currentY}deg)`;
-							if (Math.abs(currentX) > 0.05 || Math.abs(currentY) > 0.05) {
-								raf = requestAnimationFrame(reset);
-							} else {
-								card.style.transform = '';
-							}
-						};
-						raf = requestAnimationFrame(reset);
-					});
-				}
-
-				/* ── Magnetic social links ─────────── */
-				document.querySelectorAll<HTMLElement>('.social-link').forEach((link) => {
-					link.addEventListener('mousemove', (e) => {
-						const rect = link.getBoundingClientRect();
-						const cx = rect.left + rect.width / 2;
-						const cy = rect.top + rect.height / 2;
-						const dx = (e.clientX - cx) * 0.35;
-						const dy = (e.clientY - cy) * 0.35;
-						link.style.transform = `translate(${dx}px, ${dy}px) scale(1.18)`;
-						link.style.transition = 'transform 0.1s ease';
-					});
-					link.addEventListener('mouseleave', () => {
-						link.style.transform = '';
-						link.style.transition = 'transform 0.4s var(--ease-out-expo)';
-					});
 				});
 			}
 

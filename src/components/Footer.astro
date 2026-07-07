@@ -5,8 +5,13 @@ import SocialLinks from './SocialLinks.astro';
 const year = new Date().getFullYear();
 ---
 
+<div class="colophon" aria-hidden="true">
+	<span class="colophon-line"></span>
+	<span class="colophon-cross">✠</span>
+	<span class="colophon-line"></span>
+</div>
+
 <footer>
-	<div class="footer-glow" aria-hidden="true"></div>
 	<div class="footer-inner">
 		<div class="footer-brand-banner">
 			<div class="footer-cross" aria-hidden="true">✠</div>
@@ -38,6 +43,7 @@ const year = new Date().getFullYear();
 				<p class="footer-col-label">Navegar</p>
 				<ul class="nav-list">
 					<li><a href="/" class="podcast-link"><span class="podcast-link-dot" aria-hidden="true"></span>Inicio</a></li>
+					<li><a href="/manifiesto/" class="podcast-link"><span class="podcast-link-dot" aria-hidden="true"></span>Manifiesto</a></li>
 					<li><a href="/faq/" class="podcast-link"><span class="podcast-link-dot" aria-hidden="true"></span>FAQ</a></li>
 					<li><a href="/contacto-roma/" class="podcast-link"><span class="podcast-link-dot" aria-hidden="true"></span>Contacta a Roma</a></li>
 					<li><a href="/rss.xml" class="podcast-link"><span class="podcast-link-dot" aria-hidden="true"></span>RSS</a></li>
@@ -57,28 +63,42 @@ const year = new Date().getFullYear();
 </footer>
 
 <style>
-	footer {
-		background: linear-gradient(
-			to bottom,
-			var(--bg-elevated) 0%,
-			var(--bg-surface) 30%
-		);
-		border-top: 1px solid var(--border);
-		padding: 0 2rem 2rem;
-		margin-top: 0;
-		position: relative;
-		overflow: hidden;
+	/* ── Colofón: transición papel → tapa ──── */
+
+	.colophon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 1.25rem;
+		padding: 1.75rem 2rem;
+		max-width: 480px;
+		margin: 0 auto;
 	}
 
-	.footer-glow {
-		position: absolute;
-		top: 0;
-		left: 50%;
-		transform: translateX(-50%);
-		width: 70%;
-		height: 2px;
-		background: linear-gradient(90deg, transparent, var(--gold), var(--red), var(--gold), transparent);
-		opacity: 0.4;
+	.colophon-line {
+		flex: 1;
+		height: 1px;
+		background: linear-gradient(to right, transparent, var(--gold));
+		opacity: 0.55;
+	}
+
+	.colophon-line:last-child {
+		background: linear-gradient(to left, transparent, var(--gold));
+	}
+
+	.colophon-cross {
+		font-size: 1.1rem;
+		color: var(--gold);
+		opacity: 0.75;
+		line-height: 1;
+	}
+
+	footer {
+		background: var(--red-dark);
+		border-top: 2px solid var(--gold);
+		padding: 0 2rem 2rem;
+		--footer-cream: var(--gold-pale);
+		--footer-line: color-mix(in srgb, var(--gold-pale) 18%, transparent);
 	}
 
 	.footer-inner {
@@ -91,22 +111,22 @@ const year = new Date().getFullYear();
 	.footer-brand-banner {
 		text-align: center;
 		padding: 3rem 0 2.5rem;
-		border-bottom: 1px solid var(--border);
+		border-bottom: 1px solid var(--footer-line);
 	}
 
 	.footer-cross {
 		font-size: 1.5rem;
-		color: var(--gold);
-		opacity: 0.4;
+		color: var(--gold-light);
+		opacity: 0.8;
 		margin-bottom: 0.75rem;
 		display: block;
 	}
 
 	.footer-title {
 		font-family: var(--font-display);
-		font-size: 1.3rem;
+		font-size: 1.45rem;
 		font-weight: 700;
-		color: var(--text);
+		color: var(--footer-cream);
 		margin: 0 0 0.4rem;
 	}
 
@@ -114,7 +134,7 @@ const year = new Date().getFullYear();
 		font-family: var(--font-body);
 		font-size: 0.9rem;
 		font-style: italic;
-		color: var(--text-muted);
+		color: color-mix(in srgb, var(--footer-cream) 70%, transparent);
 		margin: 0;
 	}
 
@@ -125,8 +145,16 @@ const year = new Date().getFullYear();
 		grid-template-columns: 1fr 1fr 1fr;
 		gap: 3rem;
 		padding: 2.5rem 0;
-		border-bottom: 1px solid var(--border);
+		border-bottom: 1px solid var(--footer-line);
 		align-items: start;
+	}
+
+	.footer-col :global(.social-link) {
+		color: color-mix(in srgb, var(--footer-cream) 75%, transparent);
+	}
+
+	.footer-col :global(.social-link:hover) {
+		color: #FFFFFF;
 	}
 
 	.footer-col-label {
@@ -135,7 +163,7 @@ const year = new Date().getFullYear();
 		font-weight: 700;
 		letter-spacing: 0.15em;
 		text-transform: uppercase;
-		color: var(--gold);
+		color: var(--gold-light);
 		margin: 0 0 1rem;
 	}
 
@@ -152,11 +180,11 @@ const year = new Date().getFullYear();
 	.podcast-link {
 		font-family: var(--font-ui);
 		font-size: 0.82rem;
-		color: var(--text-muted);
+		color: color-mix(in srgb, var(--footer-cream) 80%, transparent);
 		display: flex;
 		align-items: center;
 		gap: 0.5em;
-		transition: color 0.2s, gap 0.2s;
+		transition: color 0.2s;
 		text-decoration: none;
 	}
 
@@ -164,20 +192,18 @@ const year = new Date().getFullYear();
 		width: 4px;
 		height: 4px;
 		border-radius: 50%;
-		background: var(--border);
+		background: color-mix(in srgb, var(--gold-light) 60%, transparent);
 		flex-shrink: 0;
-		transition: background 0.2s, transform 0.2s;
+		transition: background 0.2s;
 	}
 
 	.podcast-link:hover {
-		color: var(--red);
-		gap: 0.7em;
+		color: #FFFFFF;
 		text-decoration: none;
 	}
 
 	.podcast-link:hover .podcast-link-dot {
-		background: var(--red);
-		transform: scale(1.4);
+		background: var(--gold-light);
 	}
 
 	/* ── Bottom ───────────────────────────── */
@@ -201,23 +227,23 @@ const year = new Date().getFullYear();
 	.footer-ornament-line {
 		flex: 1;
 		height: 1px;
-		background: linear-gradient(to right, transparent, var(--border));
+		background: linear-gradient(to right, transparent, var(--footer-line));
 	}
 
 	.footer-ornament-line:last-child {
-		background: linear-gradient(to left, transparent, var(--border));
+		background: linear-gradient(to left, transparent, var(--footer-line));
 	}
 
 	.footer-ornament-cross {
 		font-size: 0.5rem;
-		color: var(--gold);
-		opacity: 0.5;
+		color: var(--gold-light);
+		opacity: 0.8;
 	}
 
 	.footer-copy {
 		font-family: var(--font-ui);
 		font-size: 0.7rem;
-		color: var(--text-faint);
+		color: color-mix(in srgb, var(--footer-cream) 55%, transparent);
 		margin: 0;
 		text-align: center;
 	}

@@ -17,12 +17,12 @@ importers:
       '@astrojs/sitemap':
         specifier: ^3.7.2
         version: 3.7.3
+      '@fontsource/cormorant-garamond':
+        specifier: ^5.2.11
+        version: 5.2.11
       '@fontsource/lato':
         specifier: ^5.2.7
         version: 5.2.7
-      '@fontsource/playfair-display':
-        specifier: ^5.2.8
-        version: 5.2.8
       '@resvg/resvg-js':
         specifier: ^2.6.2
         version: 2.6.2
@@ -261,11 +261,11 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@fontsource/cormorant-garamond@5.2.11':
+    resolution: {integrity: sha512-5JjpN023lhA5soijgVT0BdRGzmlijm402ppjccMd6h+vRE0mX2lJnE+41UPfnlidrkV9/rCo1mf58WZlHnB0CA==}
+
   '@fontsource/lato@5.2.7':
     resolution: {integrity: sha512-k5mum1ADbDW5cTw1Ett1eQVWeoZ6gq0ct6SFBibEhB4LRxhniChJZTBgd6ph5yBxLkN1fcnsnmicBNA4S/3nbw==}
-
-  '@fontsource/playfair-display@5.2.8':
-    resolution: {integrity: sha512-fUEhib70SszNhQVsGbUMSsWJhr7Je0rdeuZdtGpDNu0GKF1xJM8QhpI/y0pckU25GcChXm9TLOmeZupkvvZo2g==}
 
   '@img/colour@1.1.0':
     resolution: {integrity: sha512-Td76q7j57o/tLVdgS746cYARfSyxk8iEfRxewL9h4OMzYhbW4TAcppl0mT4eyqXddh6L/jwoM75mo7ixa/pCeQ==}
@@ -2043,9 +2043,9 @@ snapshots:
   '@esbuild/win32-x64@0.27.7':
     optional: true
 
-  '@fontsource/lato@5.2.7': {}
+  '@fontsource/cormorant-garamond@5.2.11': {}
 
-  '@fontsource/playfair-display@5.2.8': {}
+  '@fontsource/lato@5.2.7': {}
 
   '@img/colour@1.1.0': {}
 

@@ -19,10 +19,10 @@ function h(type: string, props: Record<string, unknown> | null, ...children: unk
 
 const fonts = [
 	{
-		name: 'Playfair Display',
+		name: 'Cormorant Garamond',
 		data: readFileSync(
 			resolve(
-				'./node_modules/@fontsource/playfair-display/files/playfair-display-latin-700-normal.woff'
+				'./node_modules/@fontsource/cormorant-garamond/files/cormorant-garamond-latin-700-normal.woff'
 			)
 		),
 		weight: 700 as const,
@@ -40,12 +40,12 @@ const fonts = [
 
 export const GET: APIRoute = async () => {
 	// Site palette
-	const bg     = '#F5EDE0';
-	const ink    = '#1C1008';
-	const faint  = '#9A7E64';
-	const red    = '#991A11';
-	const gold   = '#B88528';
-	const border = '#C8B498';
+	const bg     = '#FBF6EB';
+	const ink    = '#1B1209';
+	const faint  = '#8A7050';
+	const red    = '#9E2B25';
+	const gold   = '#B08A2E';
+	const border = '#D9C9AB';
 
 	const svg = await satori(
 		h(
@@ -90,7 +90,7 @@ export const GET: APIRoute = async () => {
 					'div',
 					{
 						style: {
-							fontFamily: '"Playfair Display"',
+							fontFamily: '"Cormorant Garamond"',
 							fontSize: 58,
 							fontWeight: 700,
 							color: ink,

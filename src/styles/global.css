@@ -1,33 +1,45 @@
 :root {
-	/* Fondos: pergamino cálido */
-	--bg: #F5EDE0;
-	--bg-surface: #EADECB;
-	--bg-elevated: #DFD0B8;
+	color-scheme: light;
 
-	/* Texto: tinta antigua */
-	--text: #1C1008;
-	--text-muted: #5C4838;
-	--text-faint: #9A7E64;
+	/* Fondos: crema cálida */
+	--bg: #FBF6EB;
+	--bg-surface: #F4ECDB;
+	--bg-elevated: #ECE0C8;
 
-	/* Carmesí litúrgico */
-	--red: #991A11;
-	--red-light: #B52215;
-	--red-dark: #741210;
+	/* Texto: tinta casi negra, contraste alto */
+	--text: #1B1209;
+	--text-muted: #55422E;
+	--text-faint: #8A7050;
 
-	/* Oro iluminado */
-	--gold: #B88528;
-	--gold-light: #D4A038;
-	--gold-pale: #EEE1BE;
+	/* Carmín litúrgico */
+	--red: #9E2B25;
+	--red-light: #B93A32;
+	--red-dark: #7C1F1B;
 
-	/* Bordes cálidos */
-	--border: #C8B498;
-	--border-light: #D8C8AC;
+	/* Oro rico */
+	--gold: #B08A2E;
+	--gold-light: #C9A23D;
+	--gold-pale: #F2E5C4;
 
-	--font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+	/* Verde litúrgico: tiempo ordinario */
+	--green: #3E6B4F;
+	--green-dark: #2E5340;
+	--green-pale: #E2ECDF;
+
+	/* Azul mariano */
+	--blue: #2E5077;
+	--blue-light: #3E6591;
+	--blue-pale: #E3EAF2;
+
+	/* Bordes presentes */
+	--border: #D9C9AB;
+	--border-light: #E4D7BF;
+
+	--font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
 	--font-body: 'Source Serif 4', Georgia, 'Times New Roman', serif;
 	--font-ui: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
-	--max-prose: 720px;
+	--max-prose: 680px;
 	--max-wide: 1100px;
 
 	--ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -37,7 +49,7 @@
 /* ── Keyframes ────────────────────────────── */
 
 @keyframes fadeInUp {
-	from { opacity: 0; transform: translateY(28px); }
+	from { opacity: 0; transform: translateY(10px); }
 	to   { opacity: 1; transform: translateY(0); }
 }
 
@@ -51,33 +63,12 @@
 	to   { opacity: 1; transform: translateX(0); }
 }
 
-@keyframes shimmerSweep {
-	0%   { background-position: -200% center; }
-	100% { background-position: 200% center; }
-}
-
-@keyframes borderPulse {
-	0%, 100% { border-color: var(--red); }
-	50%       { border-color: var(--gold); }
-}
-
-@keyframes gradientShift {
-	0%   { background-position: 0% 50%; }
-	50%  { background-position: 100% 50%; }
-	100% { background-position: 0% 50%; }
-}
-
-@keyframes spinSlow {
-	from { transform: rotate(0deg); }
-	to   { transform: rotate(360deg); }
-}
-
 /* ── Scroll-reveal utility ────────────────── */
 
 .reveal {
 	opacity: 0;
-	transform: translateY(24px);
-	transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+	transform: translateY(10px);
+	transition: opacity 0.5s var(--ease-out-expo), transform 0.5s var(--ease-out-expo);
 }
 
 .reveal.is-visible {
@@ -87,21 +78,30 @@
 
 .reveal-left {
 	opacity: 0;
-	transform: translateX(-20px);
-	transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
+	transform: translateX(-10px);
+	transition: opacity 0.5s var(--ease-out-expo), transform 0.5s var(--ease-out-expo);
 }
 .reveal-left.is-visible { opacity: 1; transform: none; }
 
-.reveal-d1 { transition-delay: 0.05s; }
-.reveal-d2 { transition-delay: 0.12s; }
-.reveal-d3 { transition-delay: 0.19s; }
-.reveal-d4 { transition-delay: 0.26s; }
-.reveal-d5 { transition-delay: 0.33s; }
-.reveal-d6 { transition-delay: 0.40s; }
-.reveal-d7 { transition-delay: 0.47s; }
-.reveal-d8 { transition-delay: 0.54s; }
-.reveal-d9 { transition-delay: 0.61s; }
-.reveal-d10 { transition-delay: 0.68s; }
+.reveal-d1 { transition-delay: 0.03s; }
+.reveal-d2 { transition-delay: 0.06s; }
+.reveal-d3 { transition-delay: 0.09s; }
+.reveal-d4 { transition-delay: 0.12s; }
+.reveal-d5 { transition-delay: 0.15s; }
+.reveal-d6 { transition-delay: 0.18s; }
+.reveal-d7 { transition-delay: 0.21s; }
+.reveal-d8 { transition-delay: 0.24s; }
+.reveal-d9 { transition-delay: 0.27s; }
+.reveal-d10 { transition-delay: 0.30s; }
+
+@media (prefers-reduced-motion: reduce) {
+	*, *::before, *::after {
+		animation: none !important;
+		transition-duration: 0.01ms !important;
+	}
+	.reveal, .reveal-left { opacity: 1; transform: none; }
+	html { scroll-behavior: auto; }
+}
 
 /* ── Reset ────────────────────────────────── */
 
@@ -112,41 +112,41 @@
 }
 
 ::selection {
-	background: var(--red);
-	color: #F5EDE0;
+	background: var(--gold-pale);
+	color: var(--text);
 }
 
 html {
 	scroll-behavior: smooth;
+	background-color: var(--bg);
 }
-
-/* Scrollbar elegante */
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: var(--bg-elevated); }
-::-webkit-scrollbar-thumb {
-	background: linear-gradient(to bottom, var(--red), var(--gold));
-	border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover { background: var(--red-light); }
 
 body {
 	font-family: var(--font-body);
 	font-size: 18px;
 	font-weight: 400;
-	line-height: 1.85;
+	line-height: 1.8;
 	color: var(--text);
 	background-color: var(--bg);
-	/* viñeta dorada desde arriba: luz de vela */
-	background-image: radial-gradient(
-		ellipse 140% 50% at 50% -5%,
-		color-mix(in srgb, var(--gold-pale) 55%, transparent) 0%,
-		transparent 65%
-	);
-	background-attachment: fixed;
+	/* luz dorada bajo el header + calidez de papel, todo estático */
+	background-image:
+		radial-gradient(ellipse 130% 120px at 50% 0, color-mix(in srgb, var(--gold) 12%, transparent), transparent),
+		linear-gradient(to bottom, #F6ECD4 0, var(--bg) 480px);
 	margin: 0;
 	padding: 0;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
+
+/* Grano de papel: textura fija sobre toda la página */
+body::after {
+	content: '';
+	position: fixed;
+	inset: 0;
+	z-index: 9999;
+	pointer-events: none;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+	opacity: 0.035;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -158,11 +158,11 @@ h1, h2, h3, h4, h5, h6 {
 	text-wrap: balance;
 }
 
-h1 { font-size: 3rem; }
-h2 { font-size: 2.1rem; }
-h3 { font-size: 1.6rem; }
-h4 { font-size: 1.25rem; }
-h5 { font-size: 1.05rem; }
+h1 { font-size: 3.3rem; }
+h2 { font-size: 2.3rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.35rem; }
+h5 { font-size: 1.1rem; }
 
 p {
 	margin: 0 0 1.25em;
@@ -170,13 +170,13 @@ p {
 }
 
 a {
-	color: var(--red);
+	color: var(--blue);
 	text-decoration: none;
 	transition: color 0.2s;
 }
 
 a:hover {
-	color: var(--red-light);
+	color: var(--blue-light);
 	text-decoration: underline;
 	text-decoration-thickness: 1px;
 	text-underline-offset: 3px;
@@ -210,21 +210,15 @@ hr {
 }
 
 blockquote {
-	border-left: 3px solid var(--gold);
+	border-left: 4px solid var(--gold);
 	margin: 2.5em 0;
-	padding: 1.1em 1.75em 1.1em 2em;
+	padding: 1.4em 1.75em 1.4em 2.25em;
 	font-family: var(--font-body);
 	font-style: italic;
-	color: var(--text-muted);
-	background: linear-gradient(
-		105deg,
-		color-mix(in srgb, var(--gold-pale) 70%, transparent) 0%,
-		color-mix(in srgb, var(--gold-pale) 20%, transparent) 60%,
-		transparent 100%
-	);
+	color: var(--text);
+	background: color-mix(in srgb, var(--gold-pale) 85%, transparent);
 	border-radius: 0 4px 4px 0;
 	position: relative;
-	box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gold) 10%, transparent);
 }
 
 blockquote::before {
@@ -232,10 +226,10 @@ blockquote::before {
 	font-family: var(--font-display);
 	font-size: 4.5rem;
 	color: var(--gold);
-	opacity: 0.3;
+	opacity: 0.25;
 	position: absolute;
-	top: -0.15em;
-	left: 0.25em;
+	top: -0.12em;
+	left: 0.18em;
 	line-height: 1;
 	pointer-events: none;
 }
@@ -247,11 +241,11 @@ blockquote p:last-child {
 code {
 	font-family: 'Courier New', Courier, monospace;
 	font-size: 0.875em;
-	background: var(--bg-elevated);
-	border: 1px solid var(--border);
+	background: var(--green-pale);
+	border: 1px solid color-mix(in srgb, var(--green) 25%, transparent);
 	padding: 0.15em 0.4em;
 	border-radius: 3px;
-	color: var(--red);
+	color: var(--green-dark);
 }
 
 pre {
@@ -327,13 +321,25 @@ td {
 }
 
 .prose h2 {
-	margin-top: 2.5em;
+	color: var(--red-dark);
+	margin-top: 3em;
+	margin-bottom: 0.75em;
 	padding-bottom: 0.4em;
 	border-bottom: 1px solid var(--border);
 }
 
+.prose h2::before {
+	content: '✦';
+	display: block;
+	font-size: 0.45rem;
+	color: var(--gold);
+	margin-bottom: 1.1em;
+}
+
 .prose h3 {
-	margin-top: 2em;
+	color: var(--green-dark);
+	margin-top: 2.5em;
+	margin-bottom: 0.6em;
 }
 
 .prose img {
@@ -351,20 +357,18 @@ td {
 	font-weight: 700;
 	letter-spacing: 0.12em;
 	text-transform: uppercase;
-	color: var(--red);
+	color: var(--green);
 	border: 1px solid currentColor;
 	padding: 0.2em 0.7em;
 	border-radius: 2px;
 	text-decoration: none;
-	transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+	transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
 
 .category-badge:hover {
-	background: var(--red);
+	background: var(--green);
 	color: var(--bg);
 	text-decoration: none;
-	transform: translateY(-1px);
-	box-shadow: 0 2px 10px color-mix(in srgb, var(--red) 35%, transparent);
 }
 
 /* ── Gold ornament ────────────────────────── */
@@ -395,63 +399,8 @@ td {
 
 @media (max-width: 720px) {
 	body { font-size: 17px; }
-	h1 { font-size: 2.2rem; }
-	h2 { font-size: 1.7rem; }
-	h3 { font-size: 1.4rem; }
+	h1 { font-size: 2.4rem; }
+	h2 { font-size: 1.9rem; }
+	h3 { font-size: 1.5rem; }
 }
 
-/* ── Dark mode: catedral de noche ─────────── */
-
-@media (prefers-color-scheme: dark) {
-	:root {
-		/* Abismo cálido, como madera oscura y cera */
-		--bg: #100C08;
-		--bg-surface: #1A1410;
-		--bg-elevated: #241A12;
-
-		/* Pergamino a la luz de la vela */
-		--text: #EDE4D2;
-		--text-muted: #A89070;
-		--text-faint: #6A5448;
-
-		/* Carmesí que brilla en la oscuridad */
-		--red: #C83028;
-		--red-light: #DC3C32;
-		--red-dark: #A02820;
-
-		/* Oro ardiente */
-		--gold: #CC9C2A;
-		--gold-light: #E0B03C;
-		--gold-pale: #1E1508;
-
-		/* Bordes sutiles, casi invisibles */
-		--border: #2C2018;
-		--border-light: #3A2A1C;
-	}
-
-	::selection {
-		background: var(--red);
-		color: var(--bg);
-	}
-
-	body {
-		/* viñeta carmesí desde abajo en dark mode: luz de altar */
-		background-image: radial-gradient(
-			ellipse 160% 40% at 50% 105%,
-			color-mix(in srgb, var(--red) 6%, transparent) 0%,
-			transparent 70%
-		);
-	}
-
-	code { color: #D87060; }
-
-	blockquote {
-		background: linear-gradient(
-			105deg,
-			color-mix(in srgb, var(--gold-pale) 100%, transparent) 0%,
-			color-mix(in srgb, var(--gold-pale) 40%, transparent) 60%,
-			transparent 100%
-		);
-		box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gold) 12%, transparent);
-	}
-}
