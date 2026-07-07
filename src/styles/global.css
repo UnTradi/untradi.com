@@ -234,8 +234,40 @@ blockquote::before {
 	pointer-events: none;
 }
 
-blockquote p:last-child {
+blockquote p,
+.prose blockquote p {
+	margin-bottom: 0.5em;
+}
+
+blockquote p:last-child,
+.prose blockquote p:last-child {
 	margin-bottom: 0;
+}
+
+blockquote ::selection {
+	background: var(--gold);
+	color: var(--bg);
+}
+
+/* Attribution line: last paragraph written as "— *Author*" */
+blockquote p:last-child:not(:only-child):has(> em:only-child) {
+	text-align: right;
+	font-size: 0.85em;
+	color: var(--text-muted);
+	margin-top: 1em;
+}
+
+blockquote::after {
+	content: '\201D';
+	font-family: var(--font-display);
+	font-size: 4.5rem;
+	color: var(--gold);
+	opacity: 0.25;
+	position: absolute;
+	bottom: -0.55em;
+	right: 0.18em;
+	line-height: 1;
+	pointer-events: none;
 }
 
 code {
@@ -330,10 +362,10 @@ td {
 
 .prose h2::before {
 	content: '✦';
-	display: block;
-	font-size: 0.45rem;
+	font-size: 0.65rem;
 	color: var(--gold);
-	margin-bottom: 1.1em;
+	margin-right: 0.6em;
+	vertical-align: middle;
 }
 
 .prose h3 {
