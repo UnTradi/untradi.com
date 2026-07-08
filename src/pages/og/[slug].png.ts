@@ -63,6 +63,7 @@ export const GET: APIRoute = async ({ props }) => {
 				year: 'numeric',
 				month: 'long',
 				day: 'numeric',
+				timeZone: 'UTC',
 			})
 		: '';
 
